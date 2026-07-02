@@ -108,6 +108,12 @@
 	gap: 10px;
 }
 
+.list-toggle {
+	width: 100%;
+	justify-content: center;
+	margin-top: 12px;
+}
+
 .task-item {
 	border: 1px solid var(--border);
 	border-radius: var(--radius-md);

@@ -4,6 +4,8 @@
 	const MIN_ESTIMATE = 1;
 	const MAX_ESTIMATE = 20;
 	const MAX_TITLE_LENGTH = 80;
+	const TASK_PREVIEW_LIMIT = 6;
+	let isTaskListExpanded = false;
 
 	function getOrderedTasks() {
 		const activeTaskId = app.state.activeTaskId;
@@ -17,6 +19,17 @@
 				if (leftActive !== rightActive) return leftActive ? -1 : 1;
 				if (left.task.completed !== right.task.completed) {
 					return left.task.completed ? 1 : -1;
+				}
+
+				const leftCreatedAt = new Date(left.task.createdAt).getTime();
+				const rightCreatedAt = new Date(right.task.createdAt).getTime();
+
+				if (
+					Number.isFinite(leftCreatedAt) &&
+					Number.isFinite(rightCreatedAt) &&
+					leftCreatedAt !== rightCreatedAt
+				) {
+					return rightCreatedAt - leftCreatedAt;
 				}
 
 				return left.index - right.index;
@@ -98,17 +111,33 @@
 
 	app.renderTaskList = function renderTaskList() {
 		const { el, state } = app;
+		const orderedTasks = getOrderedTasks();
+		const hasMoreTasks = orderedTasks.length > TASK_PREVIEW_LIMIT;
+
+		if (!hasMoreTasks) {
+			isTaskListExpanded = false;
+		}
+
+		const visibleTasks = isTaskListExpanded
+			? orderedTasks
+			: orderedTasks.slice(0, TASK_PREVIEW_LIMIT);
 
 		el.taskList.innerHTML = "";
 
 		if (state.tasks.length === 0) {
 			el.taskEmptyState.hidden = false;
+			el.taskListToggle.hidden = true;
 			return;
 		}
 
 		el.taskEmptyState.hidden = true;
+		el.taskListToggle.hidden = !hasMoreTasks;
+		el.taskListToggle.textContent = isTaskListExpanded
+			? "Show latest 6 tasks"
+			: `Show all ${orderedTasks.length} tasks`;
+		el.taskListToggle.setAttribute("aria-expanded", String(isTaskListExpanded));
 
-		getOrderedTasks().forEach((task) => {
+		visibleTasks.forEach((task) => {
 			el.taskList.appendChild(createTaskItem(task));
 		});
 	};
@@ -394,5 +423,9 @@
 		el.taskForm.addEventListener("submit", handleTaskSubmit);
 		el.taskTitleInput.addEventListener("input", () => setTaskFormError(""));
 		el.taskEstimateInput.addEventListener("input", () => setTaskFormError(""));
+		el.taskListToggle.addEventListener("click", () => {
+			isTaskListExpanded = !isTaskListExpanded;
+			app.renderTaskList();
+		});
 	};
 })(window.FocusFlow = window.FocusFlow || {});

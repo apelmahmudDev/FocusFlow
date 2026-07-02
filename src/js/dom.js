@@ -48,10 +48,12 @@
 		taskFormError: document.getElementById("taskFormError"),
 		taskList: document.getElementById("taskList"),
 		taskEmptyState: document.getElementById("taskEmptyState"),
+		taskListToggle: document.getElementById("taskListToggle"),
 
 		historyList: document.getElementById("historyList"),
 		historyEmptyState: document.getElementById("historyEmptyState"),
 		historyCount: document.getElementById("historyCount"),
+		historyListToggle: document.getElementById("historyListToggle"),
 		clearHistoryBtn: document.getElementById("clearHistoryBtn"),
 
 		toast: document.getElementById("toast"),

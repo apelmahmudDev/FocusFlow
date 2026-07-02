@@ -1,7 +1,8 @@
 (function (app) {
 	"use strict";
 
-	const HISTORY_LIMIT = 25;
+	const HISTORY_PREVIEW_LIMIT = 6;
+	let isHistoryExpanded = false;
 	const MODE_DETAILS = {
 		focus: {
 			label: "Focus",
@@ -47,17 +48,26 @@
 
 	function updateHistoryControls(totalCount) {
 		const hasHistory = totalCount > 0;
+		const hasMoreHistory = totalCount > HISTORY_PREVIEW_LIMIT;
 
 		if (app.el.historyCount) {
 			if (!hasHistory) {
 				app.el.historyCount.textContent = "No sessions logged";
-			} else if (totalCount > HISTORY_LIMIT) {
-				app.el.historyCount.textContent = `Showing latest ${HISTORY_LIMIT} of ${totalCount} sessions`;
+			} else if (hasMoreHistory && !isHistoryExpanded) {
+				app.el.historyCount.textContent = `Showing latest ${HISTORY_PREVIEW_LIMIT} of ${totalCount} sessions`;
 			} else {
 				app.el.historyCount.textContent = `${totalCount} session${totalCount === 1 ? "" : "s"} logged`;
 			}
 		}
 
+		app.el.historyListToggle.hidden = !hasMoreHistory;
+		app.el.historyListToggle.textContent = isHistoryExpanded
+			? "Show latest 6 sessions"
+			: `Show all ${totalCount} sessions`;
+		app.el.historyListToggle.setAttribute(
+			"aria-expanded",
+			String(isHistoryExpanded),
+		);
 		app.el.clearHistoryBtn.disabled = !hasHistory;
 		app.el.clearHistoryBtn.setAttribute("aria-disabled", String(!hasHistory));
 	}
@@ -105,7 +115,15 @@
 	app.renderHistory = function renderHistory() {
 		const { el } = app;
 		const historyItems = getHistoryItems();
-		const visibleItems = historyItems.slice(0, HISTORY_LIMIT);
+		const hasMoreHistory = historyItems.length > HISTORY_PREVIEW_LIMIT;
+
+		if (!hasMoreHistory) {
+			isHistoryExpanded = false;
+		}
+
+		const visibleItems = isHistoryExpanded
+			? historyItems
+			: historyItems.slice(0, HISTORY_PREVIEW_LIMIT);
 		const fragment = document.createDocumentFragment();
 
 		el.historyList.innerHTML = "";
@@ -138,10 +156,15 @@
 			if (!confirmed) return;
 
 			state.history = [];
+			isHistoryExpanded = false;
 			app.persistHistory();
 			app.renderHistory();
 			app.renderStats();
 			app.showToast("History cleared.");
+		});
+		el.historyListToggle.addEventListener("click", () => {
+			isHistoryExpanded = !isHistoryExpanded;
+			app.renderHistory();
 		});
 	};
 })(window.FocusFlow = window.FocusFlow || {});
