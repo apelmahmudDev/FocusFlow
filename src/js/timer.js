@@ -37,6 +37,25 @@
 		`;
 	}
 
+	function getPipToggleMarkup(isRunning) {
+		if (isRunning) {
+			return `
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<rect x="7" y="5" width="4" height="14" rx="1.2"></rect>
+					<rect x="13" y="5" width="4" height="14" rx="1.2"></rect>
+				</svg>
+				<span>Pause</span>
+			`;
+		}
+
+		return `
+			<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"></path>
+			</svg>
+			<span>Start</span>
+		`;
+	}
+
 	function updateTimerToggleButton() {
 		const { timerToggleBtn } = app.el;
 		const isRunning = app.state.isRunning;
@@ -129,11 +148,15 @@
 				.pip-ring {
 					--timer-progress: 0deg;
 					--timer-size: min(220px, 72vmin);
+					--timer-track: 14px;
+					--timer-dot: 20px;
+					--timer-dot-radius: calc((var(--timer-size) - var(--timer-track)) / 2);
 					width: var(--timer-size);
 					aspect-ratio: 1;
 					border-radius: 50%;
 					display: grid;
 					place-items: center;
+					position: relative;
 					background:
 						radial-gradient(circle, var(--panel) 0 63%, transparent 64%),
 						conic-gradient(
@@ -145,19 +168,42 @@
 						);
 				}
 
+				.pip-ring::after {
+					content: "";
+					position: absolute;
+					z-index: 2;
+					box-sizing: border-box;
+					width: var(--timer-dot);
+					height: var(--timer-dot);
+					border-radius: 50%;
+					background: linear-gradient(135deg, var(--primary), #1d8de8);
+					border: 4px solid var(--panel);
+					box-shadow:
+						0 6px 14px rgba(37, 99, 235, 0.24),
+						0 0 0 1px rgba(37, 99, 235, 0.12);
+					left: 50%;
+					top: 50%;
+					margin-left: calc(var(--timer-dot) / -2);
+					margin-top: calc(var(--timer-dot) / -2);
+					transform: rotate(calc(var(--timer-progress) - 90deg))
+						translateY(calc(var(--timer-dot-radius) * -1));
+					transform-origin: center;
+				}
+
 				.pip-ring-inner {
-					width: calc(100% - 28px);
-					height: calc(100% - 28px);
+					width: calc(100% - 34px);
+					height: calc(100% - 34px);
 					border-radius: 50%;
 					background: var(--panel);
 					display: flex;
 					flex-direction: column;
 					align-items: center;
 					justify-content: center;
+					gap: 6px;
 				}
 
 				.pip-time {
-					font-size: clamp(3rem, 18vmin, 4.4rem);
+					font-size: clamp(2.7rem, 16vmin, 3.9rem);
 					line-height: 1;
 					font-weight: 900;
 					font-variant-numeric: tabular-nums;
@@ -169,6 +215,7 @@
 					font-weight: 800;
 					color: var(--muted);
 					letter-spacing: 0.12em;
+					line-height: 1;
 				}
 
 				.pip-lines {
@@ -208,10 +255,25 @@
 					padding: 9px 14px;
 					background: var(--panel);
 					color: var(--muted);
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					gap: 7px;
 					font: inherit;
 					font-size: 0.8rem;
 					font-weight: 800;
 					cursor: pointer;
+				}
+
+				button svg {
+					width: 15px;
+					height: 15px;
+					fill: currentColor;
+					flex: none;
+				}
+
+				button svg[data-stroke="true"] {
+					fill: none;
 				}
 
 				.pip-toggle {
@@ -234,8 +296,31 @@
 				</div>
 				<div class="pip-controls">
 					<button class="pip-toggle" id="pipToggle" type="button"></button>
-					<button id="pipReset" type="button">Reset</button>
-					<button id="pipSkip" type="button">Skip</button>
+					<button id="pipReset" type="button">
+						<svg data-stroke="true" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+							<path
+								d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12C3 7.03 7.03 3 12 3C15.03 3 17.71 4.49 19.35 6.78"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+							<path
+								d="M21 3V7H17"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						</svg>
+						<span>Reset</span>
+					</button>
+					<button id="pipSkip" type="button">
+						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+							<path d="M5 5.6v12.8c0 .7.78 1.11 1.36.72l8.95-6.4a.88.88 0 0 0 0-1.44L6.36 4.88A.86.86 0 0 0 5 5.6Zm13 0v12.8h2V5.6h-2Z" />
+						</svg>
+						<span>Skip</span>
+					</button>
 				</div>
 			</main>
 		`;
@@ -295,7 +380,7 @@
 			app.el.activeTaskLine.textContent;
 		pipDocument.getElementById("pipSession").textContent =
 			app.el.sessionCountLine.textContent;
-		toggleButton.textContent = app.state.isRunning ? "Pause" : "Start";
+		toggleButton.innerHTML = getPipToggleMarkup(app.state.isRunning);
 		toggleButton.setAttribute(
 			"aria-label",
 			app.state.isRunning ? "Pause timer" : "Start timer",
