@@ -4,14 +4,20 @@
 	app.el = {
 		themeToggle: document.getElementById("themeToggle"),
 		soundToggle: document.getElementById("soundToggle"),
+		settingsToggle: document.getElementById("settingsToggle"),
+		settingsPanel: document.getElementById("settingsPanel"),
+		settingsFocusInput: document.getElementById("settingsFocusInput"),
+		settingsShortInput: document.getElementById("settingsShortInput"),
+		settingsLongInput: document.getElementById("settingsLongInput"),
+		settingsSaveBtn: document.getElementById("settingsSaveBtn"),
 
 		modeButtons: Array.from(document.querySelectorAll(".mode-btn")),
+		timerCardTitle: document.getElementById("timerCardTitle"),
 		timerDisplay: document.getElementById("timerDisplay"),
 		activeTaskLine: document.getElementById("activeTaskLine"),
 		sessionCountLine: document.getElementById("sessionCountLine"),
 
-		startBtn: document.getElementById("startBtn"),
-		pauseBtn: document.getElementById("pauseBtn"),
+		timerToggleBtn: document.getElementById("timerToggleBtn"),
 		resetBtn: document.getElementById("resetBtn"),
 		skipBtn: document.getElementById("skipBtn"),
 
@@ -42,4 +48,4 @@
 
 		toast: document.getElementById("toast"),
 	};
-})(window.FocusFlow = window.FocusFlow || {});
+})((window.FocusFlow = window.FocusFlow || {}));

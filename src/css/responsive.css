@@ -25,6 +25,16 @@
 		width: 100%;
 	}
 
+	.settings-wrap {
+		width: 100%;
+	}
+
+	.settings-popover {
+		left: 0;
+		right: 0;
+		width: auto;
+	}
+
 	.header-right .btn {
 		flex: 1;
 		justify-content: center;

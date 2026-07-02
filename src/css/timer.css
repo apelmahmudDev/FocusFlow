@@ -4,6 +4,8 @@
 		var(--bg-secondary) 0%,
 		var(--bg-soft) 130%
 	);
+	padding: 32px;
+	min-height: 100%;
 }
 
 .mode-switcher {
@@ -14,6 +16,14 @@
 	border-radius: var(--radius-md);
 	margin-bottom: 24px;
 	flex-wrap: wrap;
+}
+
+.timer-card .card-heading {
+	margin-bottom: 18px;
+}
+
+.stats-card .card-heading {
+	margin-bottom: 20px;
 }
 
 .mode-btn {
@@ -95,4 +105,8 @@
 	gap: 10px;
 	justify-content: center;
 	flex-wrap: wrap;
+}
+
+.timer-controls .btn {
+	min-height: 44px;
 }

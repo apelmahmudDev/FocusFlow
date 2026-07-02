@@ -23,22 +23,79 @@
 				<div class="header-right">
 					<button
 						id="themeToggle"
-						class="btn btn-ghost btn-pill"
+						class="btn btn-ghost btn-pill btn-icon-only"
 						aria-label="Toggle dark mode"
 						aria-pressed="false"
 					>
-						<span class="toggle-icon" aria-hidden="true">Theme</span>
-						<span class="toggle-label">Dark</span>
+						<span class="toggle-icon" aria-hidden="true"></span>
 					</button>
 					<button
 						id="soundToggle"
-						class="btn btn-ghost btn-pill"
+						class="btn btn-ghost btn-pill btn-icon-only"
 						aria-label="Toggle sound alerts"
 						aria-pressed="true"
 					>
-						<span class="toggle-icon" aria-hidden="true">Audio</span>
-						<span class="toggle-label">Sound</span>
+						<span class="toggle-icon" aria-hidden="true"></span>
 					</button>
+					<div class="settings-wrap">
+						<button
+							id="settingsToggle"
+							class="btn btn-ghost btn-pill btn-icon-only"
+							aria-label="Open timer settings"
+							aria-expanded="false"
+							aria-controls="settingsPanel"
+						>
+							<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path
+									d="M19.14 12.94a7.43 7.43 0 0 0 .05-.94 7.43 7.43 0 0 0-.05-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7.28 7.28 0 0 0-1.63-.94l-.36-2.54a.5.5 0 0 0-.49-.42h-3.84a.5.5 0 0 0-.49.42l-.36 2.54c-.58.22-1.12.53-1.63.94l-2.39-.96a.5.5 0 0 0-.6.22L2.71 8.84a.5.5 0 0 0 .12.64l2.03 1.58c-.03.31-.05.62-.05.94s.02.63.05.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32a.5.5 0 0 0 .6.22l2.39-.96c.5.4 1.05.72 1.63.94l.36 2.54a.5.5 0 0 0 .49.42h3.84a.5.5 0 0 0 .49-.42l.36-2.54c.58-.22 1.12-.53 1.63-.94l2.39.96a.5.5 0 0 0 .6-.22l1.92-3.32a.5.5 0 0 0-.12-.64l-2.03-1.58ZM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5Z"
+								/>
+							</svg>
+							<span class="visually-hidden">Timer settings</span>
+						</button>
+						<div id="settingsPanel" class="settings-popover" hidden>
+							<div class="settings-popover-heading">
+								<h3>Timer Settings</h3>
+								<p>Set the session lengths in minutes.</p>
+							</div>
+							<div class="settings-grid">
+								<label class="settings-field" for="settingsFocusInput">
+									<span>Focus</span>
+									<input
+										id="settingsFocusInput"
+										class="input"
+										type="number"
+										min="1"
+										step="1"
+									/>
+								</label>
+								<label class="settings-field" for="settingsShortInput">
+									<span>Short Break</span>
+									<input
+										id="settingsShortInput"
+										class="input"
+										type="number"
+										min="1"
+										step="1"
+									/>
+								</label>
+								<label class="settings-field" for="settingsLongInput">
+									<span>Long Break</span>
+									<input
+										id="settingsLongInput"
+										class="input"
+										type="number"
+										min="1"
+										step="1"
+									/>
+								</label>
+							</div>
+							<div class="settings-actions">
+								<button id="settingsSaveBtn" class="btn btn-primary btn-small">
+									Save
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</header>
 
@@ -46,8 +103,7 @@
 				<section class="dashboard-grid" aria-label="Timer and productivity">
 					<div class="card timer-card">
 						<div class="card-heading">
-							<h2>Pomodoro Timer</h2>
-							<p class="card-subtext">Stay focused. One session at a time.</p>
+							<h2 id="timerCardTitle">Focus period</h2>
 						</div>
 
 						<div class="mode-switcher" role="tablist" aria-label="Timer mode">
@@ -99,30 +155,65 @@
 
 						<div class="timer-controls">
 							<button
-								id="startBtn"
-								class="btn btn-primary"
+								id="timerToggleBtn"
+								class="btn btn-primary timer-toggle-btn"
 								aria-label="Start focus timer"
+								aria-pressed="false"
 							>
-								Start
-							</button>
-							<button
-								id="pauseBtn"
-								class="btn btn-secondary"
-								aria-label="Pause timer"
-								disabled
-							>
-								Pause
+								<svg
+									class="timer-toggle-icon timer-toggle-icon-start"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+									focusable="false"
+								>
+									<path
+										d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"
+									/>
+								</svg>
+								<svg
+									class="timer-toggle-icon timer-toggle-icon-pause"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+									focusable="false"
+									hidden
+								>
+									<rect x="7" y="5" width="4" height="14" rx="1.2" />
+									<rect x="13" y="5" width="4" height="14" rx="1.2" />
+								</svg>
+								<span class="timer-toggle-label">Start</span>
 							</button>
 							<button
 								id="resetBtn"
-								class="btn btn-ghost"
+								class="btn btn-ghost timer-action-btn"
 								aria-label="Reset timer"
 							>
-								Reset
+								<svg
+									class="reset-icon"
+									viewBox="0 0 24 24"
+									fill="none"
+									aria-hidden="true"
+									focusable="false"
+								>
+									<path
+										d="M21 12C21 16.97 16.97 21 12 21C7.03 21 3 16.97 3 12C3 7.03 7.03 3 12 3C15.03 3 17.71 4.49 19.35 6.78"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+									<path
+										d="M21 3V7H17"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+								<span>Reset</span>
 							</button>
 							<button
 								id="skipBtn"
-								class="btn btn-ghost"
+								class="btn btn-ghost timer-action-btn"
 								aria-label="Skip to next session"
 							>
 								Skip
@@ -304,6 +395,7 @@
 		<script defer src="src/js/history.js"></script>
 		<script defer src="src/js/sound.js"></script>
 		<script defer src="src/js/theme.js"></script>
+		<script defer src="src/js/settings.js"></script>
 		<script defer src="src/js/tasks.js"></script>
 		<script defer src="src/js/timer.js"></script>
 		<script defer src="src/js/app.js"></script>

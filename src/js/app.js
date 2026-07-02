@@ -21,6 +21,7 @@
 	function init() {
 		app.initTheme();
 		app.initSound();
+		app.initSettings();
 		app.initTimer();
 		app.initStats();
 		app.initTasks();
@@ -38,4 +39,4 @@
 	} else {
 		init();
 	}
-})(window.FocusFlow = window.FocusFlow || {});
+})((window.FocusFlow = window.FocusFlow || {}));

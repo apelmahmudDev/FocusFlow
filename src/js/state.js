@@ -1,11 +1,37 @@
 (function (app) {
 	"use strict";
 
-	const { DEFAULT_GOAL_MINUTES, DURATIONS, STORAGE_KEYS } = app;
+	const { DEFAULT_GOAL_MINUTES, STORAGE_KEYS } = app;
+
+	function normalizeDuration(value, fallback) {
+		const minutes = Number(value);
+
+		if (!Number.isFinite(minutes) || minutes <= 0) {
+			return fallback;
+		}
+
+		return Math.round(minutes) * 60;
+	}
+
+	const savedDurations = app.loadJSON(STORAGE_KEYS.durations, null);
+	app.DURATIONS = {
+		focus: normalizeDuration(
+			savedDurations && savedDurations.focus,
+			app.DEFAULT_DURATIONS.focus,
+		),
+		short: normalizeDuration(
+			savedDurations && savedDurations.short,
+			app.DEFAULT_DURATIONS.short,
+		),
+		long: normalizeDuration(
+			savedDurations && savedDurations.long,
+			app.DEFAULT_DURATIONS.long,
+		),
+	};
 
 	app.state = {
 		mode: "focus",
-		secondsLeft: DURATIONS.focus,
+		secondsLeft: app.DURATIONS.focus,
 		isRunning: false,
 		intervalId: null,
 
@@ -46,6 +72,14 @@
 		app.saveJSON(STORAGE_KEYS.sound, app.state.soundOn);
 	};
 
+	app.persistDurations = function persistDurations() {
+		app.saveJSON(STORAGE_KEYS.durations, {
+			focus: app.DURATIONS.focus / 60,
+			short: app.DURATIONS.short / 60,
+			long: app.DURATIONS.long / 60,
+		});
+	};
+
 	app.persistCycle = function persistCycle() {
 		app.saveJSON(
 			STORAGE_KEYS.sessionsBeforeLongBreak,
@@ -59,4 +93,4 @@
 			secondsLeft: app.state.secondsLeft,
 		});
 	};
-})(window.FocusFlow = window.FocusFlow || {});
+})((window.FocusFlow = window.FocusFlow || {}));

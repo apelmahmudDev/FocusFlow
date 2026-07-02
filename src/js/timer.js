@@ -1,6 +1,46 @@
 (function (app) {
 	"use strict";
 
+	function getModeLabel(mode) {
+		return app.MODE_LABELS[mode] || "Focus period";
+	}
+
+	function updateTimerHeading() {
+		app.el.timerCardTitle.textContent = getModeLabel(app.state.mode);
+	}
+
+	function getTimerToggleMarkup(isRunning) {
+		if (isRunning) {
+			return `
+				<svg class="timer-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<rect x="7" y="5" width="4" height="14" rx="1.2"></rect>
+					<rect x="13" y="5" width="4" height="14" rx="1.2"></rect>
+				</svg>
+				<span class="timer-toggle-label">Pause</span>
+			`;
+		}
+
+		return `
+			<svg class="timer-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+				<path d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"></path>
+			</svg>
+			<span class="timer-toggle-label">Start</span>
+		`;
+	}
+
+	function updateTimerToggleButton() {
+		const { timerToggleBtn } = app.el;
+		const isRunning = app.state.isRunning;
+
+		timerToggleBtn.setAttribute(
+			"aria-label",
+			isRunning ? "Pause timer" : "Start focus timer",
+		);
+		timerToggleBtn.setAttribute("aria-pressed", String(isRunning));
+		timerToggleBtn.classList.toggle("is-running", isRunning);
+		timerToggleBtn.innerHTML = getTimerToggleMarkup(isRunning);
+	}
+
 	app.setMode = function setMode(mode, { resetTime = true } = {}) {
 		const { el, state } = app;
 		state.mode = mode;
@@ -15,6 +55,7 @@
 			button.setAttribute("aria-selected", String(isActive));
 		});
 
+		updateTimerHeading();
 		app.renderTimerDisplay();
 		app.renderActiveTaskLine();
 		app.persistTimer();
@@ -25,15 +66,16 @@
 
 		app.el.timerDisplay.textContent = time;
 		updateDocumentTitle(time);
+		updateTimerToggleButton();
 	};
 
 	function updateDocumentTitle(time) {
 		if (app.state.isRunning) {
-			document.title = `${time} - FocusFlow`;
+			document.title = `${getModeLabel(app.state.mode)} ${time} - FocusFlow`;
 			return;
 		}
 
-		document.title = app.APP_TITLE;
+		document.title = `${getModeLabel(app.state.mode)} - FocusFlow`;
 	}
 
 	function tick() {
@@ -47,26 +89,24 @@
 	}
 
 	function startTimer() {
-		const { el, state } = app;
+		const { state } = app;
 		if (state.isRunning) return;
 
 		state.isRunning = true;
-		el.startBtn.disabled = true;
-		el.pauseBtn.disabled = false;
+		updateTimerToggleButton();
 		app.renderTimerDisplay();
 		app.persistTimer();
 		state.intervalId = setInterval(tick, 1000);
 	}
 
 	app.pauseTimer = function pauseTimer() {
-		const { el, state } = app;
+		const { state } = app;
 		if (!state.isRunning) return;
 
 		state.isRunning = false;
 		clearInterval(state.intervalId);
 		state.intervalId = null;
-		el.startBtn.disabled = false;
-		el.pauseBtn.disabled = true;
+		updateTimerToggleButton();
 		app.renderTimerDisplay();
 		app.persistTimer();
 	};
@@ -168,24 +208,29 @@
 		app.state.isRunning = false;
 		app.state.intervalId = null;
 
-		app.el.startBtn.disabled = false;
-		app.el.pauseBtn.disabled = true;
-
 		app.el.modeButtons.forEach((button) => {
 			const isActive = button.dataset.mode === savedTimer.mode;
 			button.classList.toggle("active", isActive);
 			button.setAttribute("aria-selected", String(isActive));
 		});
 
+		updateTimerHeading();
 		app.renderTimerDisplay();
 		app.renderActiveTaskLine();
+		updateTimerToggleButton();
 	};
 
 	app.initTimer = function initTimer() {
 		const { el } = app;
 
-		el.startBtn.addEventListener("click", startTimer);
-		el.pauseBtn.addEventListener("click", app.pauseTimer);
+		el.timerToggleBtn.addEventListener("click", () => {
+			if (app.state.isRunning) {
+				app.pauseTimer();
+				return;
+			}
+
+			startTimer();
+		});
 		el.resetBtn.addEventListener("click", resetTimer);
 		el.skipBtn.addEventListener("click", skipSession);
 
@@ -195,5 +240,8 @@
 				app.setMode(button.dataset.mode);
 			});
 		});
+
+		updateTimerHeading();
+		updateTimerToggleButton();
 	};
-})(window.FocusFlow = window.FocusFlow || {});
+})((window.FocusFlow = window.FocusFlow || {}));
