@@ -72,20 +72,6 @@
 		justify-content: flex-end;
 	}
 
-	.task-item {
-		grid-template-columns: 44px minmax(0, 1fr);
-		grid-template-areas:
-			"icon top"
-			"icon meta"
-			"progress progress"
-			"actions actions";
-	}
-
-	.task-item-icon {
-		width: 44px;
-		height: 44px;
-	}
-
 	.history-item {
 		grid-template-columns: 46px minmax(0, 1fr);
 	}

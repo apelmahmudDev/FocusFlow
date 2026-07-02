@@ -123,12 +123,6 @@
 		listItem.classList.toggle("is-over-estimate", progress.isOverEstimate);
 		listItem.dataset.taskId = task.id;
 
-		const icon = document.createElement("span");
-		icon.className = "task-item-icon";
-		icon.setAttribute("aria-hidden", "true");
-		icon.innerHTML =
-			'<svg viewBox="0 0 24 24" focusable="false"><path d="M8.7 16.3 4.4 12l4.3-4.3 1.4 1.4L7.2 12l2.9 2.9-1.4 1.4Zm6.6 0-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 4.3 4.3-4.3 4.3ZM12.8 6l1.9.6-3.5 11.4-1.9-.6L12.8 6Z"></path></svg>';
-		listItem.appendChild(icon);
 		listItem.appendChild(createTaskHeader(task));
 		listItem.appendChild(createTaskMeta(task, progress));
 		listItem.appendChild(createTaskProgress(task, progress));
