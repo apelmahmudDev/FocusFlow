@@ -616,8 +616,16 @@
 
 					<div class="card history-card">
 						<div class="card-heading history-heading-row">
-							<h2>Session History</h2>
-							<button id="clearHistoryBtn" class="btn btn-ghost btn-small">
+							<div>
+								<h2>Session History</h2>
+								<p id="historyCount" class="history-count">No sessions logged</p>
+							</div>
+							<button
+								id="clearHistoryBtn"
+								class="btn btn-ghost btn-small"
+								type="button"
+								disabled
+							>
 								Clear
 							</button>
 						</div>

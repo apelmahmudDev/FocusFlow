@@ -73,17 +73,11 @@
 	}
 
 	.history-item {
-		grid-template-columns: 46px minmax(0, 1fr);
-	}
-
-	.history-item-icon {
-		width: 46px;
-		height: 46px;
+		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.history-item-duration {
-		grid-column: 2;
-		padding-top: 0;
+		justify-self: flex-start;
 	}
 
 	.toast {

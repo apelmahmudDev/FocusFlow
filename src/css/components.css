@@ -272,6 +272,11 @@
 	color: var(--success);
 }
 
+.badge-neutral {
+	background: var(--bg-soft);
+	color: var(--text-secondary);
+}
+
 .form-field {
 	display: flex;
 	flex-direction: column;

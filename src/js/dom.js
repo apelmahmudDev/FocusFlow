@@ -51,6 +51,7 @@
 
 		historyList: document.getElementById("historyList"),
 		historyEmptyState: document.getElementById("historyEmptyState"),
+		historyCount: document.getElementById("historyCount"),
 		clearHistoryBtn: document.getElementById("clearHistoryBtn"),
 
 		toast: document.getElementById("toast"),

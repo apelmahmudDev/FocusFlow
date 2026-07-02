@@ -32,6 +32,8 @@
 		const yesterday = new Date(now);
 		yesterday.setDate(now.getDate() - 1);
 
+		if (Number.isNaN(date.getTime())) return "Recently";
+
 		const time = date.toLocaleTimeString([], {
 			hour: "numeric",
 			minute: "2-digit",
