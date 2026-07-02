@@ -53,34 +53,17 @@
 		`;
 	}
 
-	let audioCtx = null;
+	const ALERT_SOUND_PATH = "assets/sounds/notification.wav";
+	const alertSound = new Audio(ALERT_SOUND_PATH);
+	alertSound.preload = "auto";
 
 	app.playAlertSound = function playAlertSound() {
 		if (!app.state.soundOn) return;
 
-		try {
-			audioCtx =
-				audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-			const now = audioCtx.currentTime;
-
-			[0, 0.18].forEach((offset, index) => {
-				const oscillator = audioCtx.createOscillator();
-				const gain = audioCtx.createGain();
-
-				oscillator.type = "sine";
-				oscillator.frequency.value = index === 0 ? 880 : 1046.5;
-				gain.gain.setValueAtTime(0.0001, now + offset);
-				gain.gain.exponentialRampToValueAtTime(0.2, now + offset + 0.02);
-				gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.28);
-
-				oscillator.connect(gain);
-				gain.connect(audioCtx.destination);
-				oscillator.start(now + offset);
-				oscillator.stop(now + offset + 0.3);
-			});
-		} catch (err) {
-			// Web Audio unavailable.
-		}
+		alertSound.currentTime = 0;
+		alertSound.play().catch(() => {
+			// Browser autoplay rules may block audio until the user interacts.
+		});
 	};
 
 	app.applySoundToggleUI = function applySoundToggleUI() {
