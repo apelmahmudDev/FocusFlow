@@ -116,6 +116,7 @@ body.timer-fullscreen-open {
 	--timer-progress: 0deg;
 	--timer-size: min(330px, 74vw);
 	--timer-track: 17px;
+	--timer-track-color: #e9effa;
 	--timer-dot: 24px;
 	--timer-dot-radius: calc((var(--timer-size) - var(--timer-track)) / 2);
 	width: var(--timer-size);
@@ -129,11 +130,15 @@ body.timer-fullscreen-open {
 			from -90deg,
 			var(--accent-primary) 0deg,
 			var(--accent-secondary) var(--timer-progress),
-			#e9effa var(--timer-progress),
-			#e9effa 360deg
+			var(--timer-track-color) var(--timer-progress),
+			var(--timer-track-color) 360deg
 		);
 	position: relative;
 	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+}
+
+[data-theme="dark"] .timer-ring {
+	--timer-track-color: #1e293b;
 }
 
 .timer-ring::after {
