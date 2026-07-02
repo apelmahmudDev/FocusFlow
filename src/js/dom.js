@@ -33,8 +33,10 @@
 		goalForm: document.getElementById("goalForm"),
 		goalInput: document.getElementById("goalInput"),
 		saveGoalBtn: document.getElementById("saveGoalBtn"),
+		goalStatus: document.getElementById("goalStatus"),
 		goalCurrent: document.getElementById("goalCurrent"),
 		goalTarget: document.getElementById("goalTarget"),
+		goalPercent: document.getElementById("goalPercent"),
 		goalProgressBar: document.getElementById("goalProgressBar"),
 		goalProgressFill: document.getElementById("goalProgressFill"),
 

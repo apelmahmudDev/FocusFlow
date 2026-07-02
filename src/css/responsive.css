@@ -68,6 +68,10 @@
 		grid-template-columns: 1fr;
 	}
 
+	.goal-actions {
+		justify-content: flex-end;
+	}
+
 	.task-item {
 		grid-template-columns: 44px minmax(0, 1fr);
 		grid-template-areas:

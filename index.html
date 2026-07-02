@@ -9,6 +9,12 @@
 			content="A clean Pomodoro productivity app for students and developers. Plan your tasks, stay focused, track your progress."
 		/>
 		<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="src/css/style.css" />
 	</head>
 	<body>
@@ -290,11 +296,6 @@
 
 					<div class="card stats-card">
 						<div class="card-heading">
-							<span class="section-icon section-icon-line" aria-hidden="true">
-								<svg viewBox="0 0 24 24" focusable="false">
-									<path d="M3 17h18v2H3v-2Zm1-4 5-5 4 4 6-7h-3V3h7v7h-2V6.52l-7.83 9.13L9 11.48l-3.59 3.59L4 13.66Z" />
-								</svg>
-							</span>
 							<h2>Today's Productivity</h2>
 						</div>
 
@@ -359,34 +360,70 @@
 
 						<div class="daily-goal-section">
 							<div class="daily-goal-heading">
-								<h3>Daily Goal</h3>
+								<div>
+									<h3>Daily Goal</h3>
+									<p id="goalStatus" class="goal-status" aria-live="polite">
+										Set your target minutes for today.
+									</p>
+								</div>
 								<button
 									id="editGoalBtn"
 									class="btn-link"
 									aria-label="Edit daily focus goal"
+									aria-expanded="false"
+									aria-controls="goalForm"
 								>
-									Edit
+									<span class="goal-edit-icon goal-edit-icon-pen" aria-hidden="true">
+										<svg viewBox="0 0 24 24" focusable="false">
+											<path d="M4 16.5V20h3.5L18.06 9.44l-3.5-3.5L4 16.5Zm12.76-12.76 3.5 3.5 1.24-1.24a1.24 1.24 0 0 0 0-1.76l-1.74-1.74a1.24 1.24 0 0 0-1.76 0l-1.24 1.24Z" />
+										</svg>
+									</span>
+									<span class="goal-edit-icon goal-edit-icon-close" aria-hidden="true">
+										<svg viewBox="0 0 24 24" focusable="false">
+											<path d="m6.4 5 12.6 12.6-1.4 1.4L5 6.4 6.4 5Zm12.6 1.4L6.4 19 5 17.6 17.6 5 19 6.4Z" />
+										</svg>
+									</span>
+									<span class="visually-hidden goal-edit-text">Edit goal</span>
 								</button>
 							</div>
-							<div class="goal-form" id="goalForm">
+							<form class="goal-form" id="goalForm" novalidate hidden>
 								<label for="goalInput" class="visually-hidden"
 									>Daily goal in minutes</label
 								>
-								<input
-									type="number"
-									id="goalInput"
-									class="input"
-									min="5"
-									step="5"
-								/>
-								<button id="saveGoalBtn" class="btn btn-primary btn-small">
-									Save Goal
-								</button>
+								<div class="goal-input-wrap">
+									<input
+										type="number"
+										id="goalInput"
+										class="input"
+										min="5"
+										max="1440"
+										step="5"
+										inputmode="numeric"
+										required
+										aria-describedby="goalInputHint"
+									/>
+									<span class="goal-input-unit" aria-hidden="true">min</span>
+								</div>
+								<div class="goal-actions">
+									<button
+										type="submit"
+										id="saveGoalBtn"
+										class="btn btn-primary btn-small"
+									>
+										Save
+									</button>
+								</div>
+								<p id="goalInputHint" class="goal-input-hint">
+									Use whole minutes from 5 to 1440.
+								</p>
+							</form>
+							<div class="goal-progress-row">
+								<p class="goal-progress-text">
+									<span id="goalCurrent">0</span> /
+									<span id="goalTarget">120</span> min
+								</p>
+								<span id="goalPercent" class="goal-percent">0%</span>
 							</div>
-							<p class="goal-progress-text">
-								<span id="goalCurrent">0</span> /
-								<span id="goalTarget">120</span> min
-							</p>
 							<div
 								class="progress-bar-track"
 								role="progressbar"
