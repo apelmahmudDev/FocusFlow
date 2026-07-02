@@ -9,6 +9,7 @@
 		sound: "focusflow_sound",
 		activeTaskId: "focusflow_active_task_id",
 		sessionsBeforeLongBreak: "focusflow_sessions_completed_cycle",
+		timer: "focusflow_timer",
 	};
 
 	app.DURATIONS = {

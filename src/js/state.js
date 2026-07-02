@@ -52,4 +52,11 @@
 			app.state.sessionsCompletedInCycle,
 		);
 	};
+
+	app.persistTimer = function persistTimer() {
+		app.saveJSON(STORAGE_KEYS.timer, {
+			mode: app.state.mode,
+			secondsLeft: app.state.secondsLeft,
+		});
+	};
 })(window.FocusFlow = window.FocusFlow || {});

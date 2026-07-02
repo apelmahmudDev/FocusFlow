@@ -27,7 +27,7 @@
 		app.initHistory();
 
 		normalizeStoredTasks();
-		app.setMode("focus");
+		app.restoreTimer();
 		app.renderTaskList();
 		app.renderHistory();
 		app.renderStats();
