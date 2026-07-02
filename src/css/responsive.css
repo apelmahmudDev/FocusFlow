@@ -77,6 +77,7 @@
 		grid-template-areas:
 			"icon top"
 			"icon meta"
+			"progress progress"
 			"actions actions";
 	}
 

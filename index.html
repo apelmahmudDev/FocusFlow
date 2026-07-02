@@ -452,7 +452,7 @@
 							</p>
 						</div>
 
-						<form id="taskForm" class="task-form">
+						<form id="taskForm" class="task-form" novalidate>
 							<div class="form-field">
 								<label for="taskTitleInput">Task Title</label>
 								<input
@@ -462,6 +462,8 @@
 									placeholder="Enter task name..."
 									required
 									maxlength="80"
+									autocomplete="off"
+									aria-describedby="taskFormError"
 								/>
 							</div>
 
@@ -484,18 +486,25 @@
 										class="input"
 										min="1"
 										max="20"
+										step="1"
 										value="4"
+										required
+										aria-describedby="taskFormError"
 									/>
 								</div>
 							</div>
 
+							<p id="taskFormError" class="task-form-error" role="alert" hidden></p>
 							<button type="submit" class="btn btn-primary btn-full">
 								Add Task
 							</button>
 						</form>
 
 						<div class="task-list-wrap">
-							<h3 class="task-list-heading">Task List</h3>
+							<div class="task-list-header">
+								<h3 class="task-list-heading">Task List</h3>
+								<span id="taskCount" class="task-count">0 tasks</span>
+							</div>
 							<ul id="taskList" class="task-list"></ul>
 							<p id="taskEmptyState" class="empty-state" hidden>
 								<strong>No tasks yet.</strong>

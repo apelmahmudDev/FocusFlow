@@ -517,21 +517,22 @@
 
 	function completeSession() {
 		const { state } = app;
+		const completedMode = state.mode;
 		app.pauseTimer();
 
 		const task = app.getActiveTask();
-		const durationMinutes = app.DURATIONS[state.mode] / 60;
+		const durationMinutes = app.DURATIONS[completedMode] / 60;
 
 		state.history.unshift({
 			id: app.uid(),
-			mode: state.mode,
+			mode: completedMode,
 			taskName: task ? task.title : "No active task",
 			durationMinutes,
 			completedAt: new Date().toISOString(),
 		});
 		app.persistHistory();
 
-		if (state.mode === "focus") {
+		if (completedMode === "focus") {
 			if (task) {
 				task.completedPomodoros += 1;
 				app.persistTasks();
@@ -542,10 +543,15 @@
 			app.showToast("Focus session completed!");
 		} else {
 			app.showToast(
-				state.mode === "short"
+				completedMode === "short"
 					? "Short break complete."
 					: "Long break complete.",
 			);
+
+			if (completedMode === "long") {
+				state.sessionsCompletedInCycle = 0;
+				app.persistCycle();
+			}
 		}
 
 		app.playAlertSound();
@@ -553,7 +559,7 @@
 		app.renderTaskList();
 		app.renderHistory();
 		pulseTimerDisplay();
-		advanceToNextMode();
+		advanceToNextMode({ autoStart: completedMode !== "long" });
 	}
 
 	function pulseTimerDisplay() {
@@ -564,8 +570,9 @@
 		timerDisplay.classList.add("pulse");
 	}
 
-	function advanceToNextMode() {
+	function advanceToNextMode({ autoStart = false } = {}) {
 		const { state } = app;
+		let nextMode = "focus";
 
 		if (state.mode === "focus") {
 			const completedFocusCount = state.sessionsCompletedInCycle;
@@ -573,11 +580,14 @@
 				completedFocusCount > 0 &&
 				completedFocusCount % app.SESSIONS_UNTIL_LONG_BREAK === 0;
 
-			app.setMode(isLongBreakDue ? "long" : "short");
-			return;
+			nextMode = isLongBreakDue ? "long" : "short";
 		}
 
-		app.setMode("focus");
+		app.setMode(nextMode);
+
+		if (autoStart) {
+			startTimer();
+		}
 	}
 
 	app.restoreTimer = function restoreTimer() {
