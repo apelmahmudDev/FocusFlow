@@ -49,7 +49,7 @@
 		var(--accent-secondary)
 	);
 	color: #ffffff;
-	box-shadow: 0 10px 22px rgba(37, 99, 235, 0.28);
+	box-shadow: 0 7px 16px rgba(37, 99, 235, 0.2);
 }
 
 .timer-display-wrap {
@@ -92,7 +92,7 @@
 	background: linear-gradient(135deg, #2563eb, #1d8de8);
 	border: 4px solid var(--bg-elevated);
 	box-shadow:
-		0 8px 20px rgba(37, 99, 235, 0.34),
+		0 6px 14px rgba(37, 99, 235, 0.24),
 		0 0 0 1px rgba(37, 99, 235, 0.12);
 	left: 50%;
 	top: 50%;
@@ -115,7 +115,7 @@
 	align-items: center;
 	justify-content: center;
 	gap: 8px;
-	box-shadow: inset 0 0 28px rgba(37, 99, 235, 0.04);
+	box-shadow: inset 0 0 18px rgba(37, 99, 235, 0.03);
 }
 
 .timer-mode-icon {

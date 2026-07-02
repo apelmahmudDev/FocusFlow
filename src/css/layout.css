@@ -36,7 +36,7 @@
 	height: 22px;
 	border-radius: 5px;
 	transform: skewY(-30deg) rotate(30deg);
-	box-shadow: 0 10px 20px rgba(37, 99, 235, 0.14);
+	box-shadow: 0 6px 14px rgba(37, 99, 235, 0.1);
 }
 
 .brand-mark::before {

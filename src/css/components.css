@@ -196,7 +196,7 @@
 		var(--accent-secondary)
 	);
 	color: #ffffff;
-	box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
+	box-shadow: 0 7px 14px rgba(37, 99, 235, 0.18);
 }
 
 .btn-secondary {
