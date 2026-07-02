@@ -20,4 +20,5 @@
 	app.SESSIONS_UNTIL_LONG_BREAK = 4;
 	app.DEFAULT_GOAL_MINUTES = 120;
 	app.CATEGORIES = ["Study", "Coding", "Reading", "Writing", "Other"];
+	app.APP_TITLE = "FocusFlow - Pomodoro Focus Timer";
 })(window.FocusFlow = window.FocusFlow || {});

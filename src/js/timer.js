@@ -20,8 +20,20 @@
 	};
 
 	app.renderTimerDisplay = function renderTimerDisplay() {
-		app.el.timerDisplay.textContent = app.formatTime(app.state.secondsLeft);
+		const time = app.formatTime(app.state.secondsLeft);
+
+		app.el.timerDisplay.textContent = time;
+		updateDocumentTitle(time);
 	};
+
+	function updateDocumentTitle(time) {
+		if (app.state.isRunning) {
+			document.title = `${time} - FocusFlow`;
+			return;
+		}
+
+		document.title = app.APP_TITLE;
+	}
 
 	function tick() {
 		app.state.secondsLeft = Math.max(0, app.state.secondsLeft - 1);
@@ -39,6 +51,7 @@
 		state.isRunning = true;
 		el.startBtn.disabled = true;
 		el.pauseBtn.disabled = false;
+		app.renderTimerDisplay();
 		state.intervalId = setInterval(tick, 1000);
 	}
 
@@ -51,6 +64,7 @@
 		state.intervalId = null;
 		el.startBtn.disabled = false;
 		el.pauseBtn.disabled = true;
+		app.renderTimerDisplay();
 	};
 
 	function resetTimer() {
