@@ -12,7 +12,6 @@
 		settingsResetBtn: document.getElementById("settingsResetBtn"),
 		settingsSaveBtn: document.getElementById("settingsSaveBtn"),
 
-		modeButtons: Array.from(document.querySelectorAll(".mode-btn")),
 		timerCard: document.querySelector(".timer-card"),
 		timerPipBtn: document.getElementById("timerPipBtn"),
 		timerFullscreenBtn: document.getElementById("timerFullscreenBtn"),

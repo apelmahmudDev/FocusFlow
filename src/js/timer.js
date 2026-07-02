@@ -4,7 +4,7 @@
 	let timerPipWindow = null;
 
 	function getModeLabel(mode) {
-		return app.MODE_LABELS[mode] || "Focus period";
+		return app.MODE_LABELS[mode] || "Focus session";
 	}
 
 	function getTimerProgress() {
@@ -203,7 +203,7 @@
 				}
 
 				.pip-time {
-					font-size: clamp(2.7rem, 16vmin, 3.9rem);
+					font-size: clamp(2.5rem, 14.5vmin, 3.5rem);
 					line-height: 1;
 					font-weight: 900;
 					font-variant-numeric: tabular-nums;
@@ -434,18 +434,12 @@
 	}
 
 	app.setMode = function setMode(mode, { resetTime = true } = {}) {
-		const { el, state } = app;
+		const { state } = app;
 		state.mode = mode;
 
 		if (resetTime) {
 			state.secondsLeft = app.DURATIONS[mode];
 		}
-
-		el.modeButtons.forEach((button) => {
-			const isActive = button.dataset.mode === mode;
-			button.classList.toggle("active", isActive);
-			button.setAttribute("aria-selected", String(isActive));
-		});
 
 		updateTimerHeading();
 		app.renderTimerDisplay();
@@ -613,12 +607,6 @@
 		app.state.isRunning = false;
 		app.state.intervalId = null;
 
-		app.el.modeButtons.forEach((button) => {
-			const isActive = button.dataset.mode === savedTimer.mode;
-			button.classList.toggle("active", isActive);
-			button.setAttribute("aria-selected", String(isActive));
-		});
-
 		updateTimerHeading();
 		app.renderActiveTaskLine();
 
@@ -652,13 +640,6 @@
 		el.skipBtn.addEventListener("click", skipSession);
 		el.timerPipBtn.addEventListener("click", toggleTimerPip);
 		el.timerFullscreenBtn.addEventListener("click", toggleTimerFullscreen);
-
-		el.modeButtons.forEach((button) => {
-			button.addEventListener("click", () => {
-				app.pauseTimer();
-				app.setMode(button.dataset.mode);
-			});
-		});
 
 		document.addEventListener("keydown", (event) => {
 			if (

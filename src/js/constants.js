@@ -22,7 +22,7 @@
 	app.DURATIONS = { ...app.DEFAULT_DURATIONS };
 
 	app.MODE_LABELS = {
-		focus: "Focus period",
+		focus: "Focus session",
 		short: "Short break",
 		long: "Long break",
 	};
