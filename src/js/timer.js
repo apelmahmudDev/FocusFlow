@@ -41,6 +41,22 @@
 		timerToggleBtn.innerHTML = getTimerToggleMarkup(isRunning);
 	}
 
+	function setTimerFullscreen(isFullscreen) {
+		const { timerCard, timerFullscreenBtn } = app.el;
+
+		timerCard.classList.toggle("is-fullscreen", isFullscreen);
+		document.body.classList.toggle("timer-fullscreen-open", isFullscreen);
+		timerFullscreenBtn.setAttribute("aria-pressed", String(isFullscreen));
+		timerFullscreenBtn.setAttribute(
+			"aria-label",
+			isFullscreen ? "Shrink timer card" : "Expand timer card",
+		);
+	}
+
+	function toggleTimerFullscreen() {
+		setTimerFullscreen(!app.el.timerCard.classList.contains("is-fullscreen"));
+	}
+
 	app.setMode = function setMode(mode, { resetTime = true } = {}) {
 		const { el, state } = app;
 		state.mode = mode;
@@ -199,6 +215,13 @@
 		const savedTimer = app.loadJSON(app.STORAGE_KEYS.timer, null);
 		const isValidMode = savedTimer && savedTimer.mode in app.DURATIONS;
 		const secondsLeft = Number(savedTimer && savedTimer.secondsLeft);
+		const savedAt = Number(savedTimer && savedTimer.savedAt);
+		const shouldResume = Boolean(savedTimer && savedTimer.isRunning);
+		const elapsedSinceSave =
+			shouldResume && Number.isFinite(savedAt)
+				? Math.max(0, Math.floor((Date.now() - savedAt) / 1000))
+				: 0;
+		const restoredSecondsLeft = Math.max(0, secondsLeft - elapsedSinceSave);
 		const isValidTime =
 			Number.isFinite(secondsLeft) &&
 			secondsLeft > 0 &&
@@ -211,7 +234,7 @@
 		}
 
 		app.state.mode = savedTimer.mode;
-		app.state.secondsLeft = secondsLeft;
+		app.state.secondsLeft = restoredSecondsLeft;
 		app.state.isRunning = false;
 		app.state.intervalId = null;
 
@@ -222,8 +245,20 @@
 		});
 
 		updateTimerHeading();
-		app.renderTimerDisplay();
 		app.renderActiveTaskLine();
+
+		if (shouldResume && restoredSecondsLeft > 0) {
+			startTimer();
+			return;
+		}
+
+		if (shouldResume && restoredSecondsLeft === 0) {
+			app.renderTimerDisplay();
+			completeSession();
+			return;
+		}
+
+		app.renderTimerDisplay();
 		updateTimerToggleButton();
 	};
 
@@ -240,12 +275,23 @@
 		});
 		el.resetBtn.addEventListener("click", resetTimer);
 		el.skipBtn.addEventListener("click", skipSession);
+		el.timerFullscreenBtn.addEventListener("click", toggleTimerFullscreen);
 
 		el.modeButtons.forEach((button) => {
 			button.addEventListener("click", () => {
 				app.pauseTimer();
 				app.setMode(button.dataset.mode);
 			});
+		});
+
+		document.addEventListener("keydown", (event) => {
+			if (
+				event.key === "Escape" &&
+				el.timerCard.classList.contains("is-fullscreen")
+			) {
+				setTimerFullscreen(false);
+				el.timerFullscreenBtn.focus();
+			}
 		});
 
 		updateTimerHeading();

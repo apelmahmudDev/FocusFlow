@@ -91,6 +91,8 @@
 		app.saveJSON(STORAGE_KEYS.timer, {
 			mode: app.state.mode,
 			secondsLeft: app.state.secondsLeft,
+			isRunning: app.state.isRunning,
+			savedAt: Date.now(),
 		});
 	};
 })((window.FocusFlow = window.FocusFlow || {}));

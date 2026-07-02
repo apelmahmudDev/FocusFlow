@@ -13,6 +13,8 @@
 		settingsSaveBtn: document.getElementById("settingsSaveBtn"),
 
 		modeButtons: Array.from(document.querySelectorAll(".mode-btn")),
+		timerCard: document.querySelector(".timer-card"),
+		timerFullscreenBtn: document.getElementById("timerFullscreenBtn"),
 		timerCardTitle: document.getElementById("timerCardTitle"),
 		timerDisplay: document.getElementById("timerDisplay"),
 		activeTaskLine: document.getElementById("activeTaskLine"),
