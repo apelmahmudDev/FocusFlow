@@ -458,6 +458,7 @@
 		}
 		updateDocumentTitle(time);
 		updateTimerToggleButton();
+		updateFavicon();
 		app.renderTimerPip();
 	};
 
@@ -468,6 +469,37 @@
 		}
 
 		document.title = `${getModeLabel(app.state.mode)} - FocusFlow`;
+	}
+
+	function getTimerFaviconMarkup(isRunning) {
+		const icon = isRunning
+			? '<rect x="22" y="19" width="7" height="26" rx="2" fill="#fff"/><rect x="35" y="19" width="7" height="26" rx="2" fill="#fff"/>'
+			: '<path d="M25 20.5v23a2 2 0 0 0 3.14 1.64l17-11.5a2 2 0 0 0 0-3.28l-17-11.5A2 2 0 0 0 25 20.5Z" fill="#fff"/>';
+
+		return `
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+				<defs>
+					<linearGradient id="faviconGradient" x1="12" y1="10" x2="54" y2="56" gradientUnits="userSpaceOnUse">
+						<stop stop-color="#2563EB"/>
+						<stop offset="1" stop-color="#0F9F94"/>
+					</linearGradient>
+				</defs>
+				<rect x="8" y="8" width="48" height="48" rx="14" fill="url(#faviconGradient)"/>
+				${icon}
+			</svg>
+		`;
+	}
+
+	function updateFavicon() {
+		const favicon =
+			document.getElementById("appFavicon") ||
+			document.querySelector('link[rel~="icon"]');
+
+		if (!favicon) return;
+
+		favicon.href = `data:image/svg+xml,${encodeURIComponent(
+			getTimerFaviconMarkup(app.state.isRunning),
+		)}`;
 	}
 
 	function tick() {
