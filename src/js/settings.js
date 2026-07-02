@@ -99,10 +99,12 @@
 	}
 
 	function syncOpenState(isOpen) {
-		const { settingsToggle, settingsPanel } = app.el;
+		const { settingsToggle, settingsPanel, settingsBackdrop } = app.el;
 
 		settingsToggle.setAttribute("aria-expanded", String(isOpen));
 		settingsPanel.hidden = !isOpen;
+		settingsBackdrop.hidden = !isOpen;
+		document.body.classList.toggle("settings-modal-open", isOpen);
 	}
 
 	function openSettings() {
@@ -287,11 +289,13 @@
 
 		el.settingsSaveBtn.addEventListener("click", saveSettings);
 		el.settingsResetBtn.addEventListener("click", resetSettings);
+		el.settingsBackdrop.addEventListener("click", closeSettings);
 
 		document.addEventListener("click", (event) => {
 			if (el.settingsPanel.hidden) return;
 			if (el.settingsPanel.contains(event.target)) return;
 			if (el.settingsToggle.contains(event.target)) return;
+			if (el.settingsBackdrop.contains(event.target)) return;
 
 			closeSettings();
 		});

@@ -115,6 +115,10 @@
 	position: relative;
 }
 
+.settings-backdrop {
+	display: none;
+}
+
 .settings-popover {
 	position: absolute;
 	top: calc(100% + 12px);

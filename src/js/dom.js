@@ -5,6 +5,7 @@
 		themeToggle: document.getElementById("themeToggle"),
 		soundToggle: document.getElementById("soundToggle"),
 		settingsToggle: document.getElementById("settingsToggle"),
+		settingsBackdrop: document.getElementById("settingsBackdrop"),
 		settingsPanel: document.getElementById("settingsPanel"),
 		settingsFocusInput: document.getElementById("settingsFocusInput"),
 		settingsShortInput: document.getElementById("settingsShortInput"),

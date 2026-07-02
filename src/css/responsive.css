@@ -33,10 +33,34 @@
 		width: auto;
 	}
 
+	body.settings-modal-open {
+		overflow: hidden;
+	}
+
+	.settings-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 19;
+		display: block;
+		background: rgba(15, 23, 42, 0.38);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+
+	.settings-backdrop[hidden] {
+		display: none;
+	}
+
 	.settings-popover {
-		left: 0;
-		right: 0;
-		width: auto;
+		position: fixed;
+		top: 88px;
+		left: 50%;
+		right: auto;
+		z-index: 20;
+		width: min(calc(100vw - 28px), 360px);
+		max-height: calc(100vh - 112px);
+		overflow-y: auto;
+		transform: translateX(-50%);
 	}
 
 	.header-right .btn {
@@ -78,6 +102,10 @@
 
 	.history-item-duration {
 		justify-self: flex-start;
+	}
+
+	.cleanup-time-grid {
+		grid-template-columns: 1fr 1fr 74px;
 	}
 
 	.toast {
