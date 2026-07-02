@@ -41,11 +41,11 @@
 		goalProgressFill: document.getElementById("goalProgressFill"),
 
 		taskForm: document.getElementById("taskForm"),
+		taskAddToggle: document.getElementById("taskAddToggle"),
 		taskTitleInput: document.getElementById("taskTitleInput"),
 		taskCategoryInput: document.getElementById("taskCategoryInput"),
 		taskEstimateInput: document.getElementById("taskEstimateInput"),
 		taskFormError: document.getElementById("taskFormError"),
-		taskCount: document.getElementById("taskCount"),
 		taskList: document.getElementById("taskList"),
 		taskEmptyState: document.getElementById("taskEmptyState"),
 

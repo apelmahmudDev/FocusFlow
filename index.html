@@ -445,14 +445,28 @@
 
 				<section class="content-grid" aria-label="Tasks and history">
 					<div class="card task-card">
-						<div class="card-heading">
-							<h2>Tasks</h2>
-							<p class="card-subtext">
-								Add and select what you want to focus on.
-							</p>
+						<div class="card-heading task-heading-row">
+							<div>
+								<h2>Tasks</h2>
+								<p class="card-subtext">
+									Add and select what you want to focus on.
+								</p>
+							</div>
+							<button
+								id="taskAddToggle"
+								class="task-add-toggle"
+								type="button"
+								aria-label="Add a new task"
+								aria-expanded="false"
+								aria-controls="taskForm"
+							>
+								<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+									<path d="M12 5v14M5 12h14" />
+								</svg>
+							</button>
 						</div>
 
-						<form id="taskForm" class="task-form" novalidate>
+						<form id="taskForm" class="task-form" novalidate hidden>
 							<div class="form-field">
 								<label for="taskTitleInput">Task Title</label>
 								<input
@@ -501,10 +515,6 @@
 						</form>
 
 						<div class="task-list-wrap">
-							<div class="task-list-header">
-								<h3 class="task-list-heading">Task List</h3>
-								<span id="taskCount" class="task-count">0 tasks</span>
-							</div>
 							<ul id="taskList" class="task-list"></ul>
 							<p id="taskEmptyState" class="empty-state" hidden>
 								<strong>No tasks yet.</strong>

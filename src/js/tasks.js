@@ -64,6 +64,25 @@
 		}
 	}
 
+	function setTaskFormOpen(isOpen) {
+		const { el } = app;
+
+		el.taskForm.hidden = !isOpen;
+		el.taskAddToggle.classList.toggle("is-open", isOpen);
+		el.taskAddToggle.setAttribute("aria-expanded", String(isOpen));
+		el.taskAddToggle.setAttribute(
+			"aria-label",
+			isOpen ? "Close task form" : "Add a new task",
+		);
+
+		if (isOpen) {
+			el.taskTitleInput.focus();
+			return;
+		}
+
+		setTaskFormError("");
+	}
+
 	function getTaskProgress(task) {
 		const completed = Math.max(0, Number(task.completedPomodoros) || 0);
 		const estimate = Math.max(MIN_ESTIMATE, Number(task.estimatedPomodoros) || 1);
@@ -79,10 +98,8 @@
 
 	app.renderTaskList = function renderTaskList() {
 		const { el, state } = app;
-		const taskCount = state.tasks.length;
 
 		el.taskList.innerHTML = "";
-		el.taskCount.textContent = `${taskCount} ${taskCount === 1 ? "task" : "tasks"}`;
 
 		if (state.tasks.length === 0) {
 			el.taskEmptyState.hidden = false;
@@ -361,6 +378,7 @@
 		app.renderStats();
 		app.showToast("Task added successfully.");
 		resetTaskForm(category);
+		setTaskFormOpen(false);
 	}
 
 	function resetTaskForm(category) {
@@ -371,12 +389,14 @@
 			? category
 			: "Coding";
 		el.taskEstimateInput.value = "4";
-		el.taskTitleInput.focus();
 	}
 
 	app.initTasks = function initTasks() {
 		const { el } = app;
 
+		el.taskAddToggle.addEventListener("click", () => {
+			setTaskFormOpen(el.taskForm.hidden);
+		});
 		el.taskForm.addEventListener("submit", handleTaskSubmit);
 		el.taskTitleInput.addEventListener("input", () => setTaskFormError(""));
 		el.taskEstimateInput.addEventListener("input", () => setTaskFormError(""));
