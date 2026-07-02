@@ -1,6 +1,6 @@
 .timer-card {
 	background: var(--bg-elevated);
-	padding: 30px;
+	padding: 24px;
 	min-height: 100%;
 	position: relative;
 }
