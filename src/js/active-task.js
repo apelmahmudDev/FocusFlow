@@ -17,5 +17,9 @@
 		const nextInCycle =
 			(state.sessionsCompletedInCycle % app.SESSIONS_UNTIL_LONG_BREAK) + 1;
 		el.sessionCountLine.textContent = `Session ${nextInCycle} of ${app.SESSIONS_UNTIL_LONG_BREAK} before long break`;
+
+		if (app.renderTimerPip) {
+			app.renderTimerPip();
+		}
 	};
 })(window.FocusFlow = window.FocusFlow || {});

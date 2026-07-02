@@ -1,8 +1,17 @@
 (function (app) {
 	"use strict";
 
+	let timerPipWindow = null;
+
 	function getModeLabel(mode) {
 		return app.MODE_LABELS[mode] || "Focus period";
+	}
+
+	function getTimerProgress() {
+		const duration = app.DURATIONS[app.state.mode] || app.state.secondsLeft;
+		const elapsed = Math.max(0, duration - app.state.secondsLeft);
+
+		return duration > 0 ? Math.min(360, (elapsed / duration) * 360) : 0;
 	}
 
 	function updateTimerHeading() {
@@ -57,6 +66,274 @@
 		setTimerFullscreen(!app.el.timerCard.classList.contains("is-fullscreen"));
 	}
 
+	function getTimerPipMarkup() {
+		return `
+			<style>
+				:root {
+					color-scheme: light;
+					--bg: #f4f7fb;
+					--panel: rgba(255, 255, 255, 0.92);
+					--text: #0b1736;
+					--muted: #64708a;
+					--border: #dfe7f3;
+					--primary: #2563eb;
+					--secondary: #0f9f94;
+					--track: #e9effa;
+					font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+				}
+
+				[data-theme="dark"] {
+					color-scheme: dark;
+					--bg: #0f172a;
+					--panel: rgba(17, 24, 39, 0.94);
+					--text: #f9fafb;
+					--muted: #cbd5e1;
+					--border: #334155;
+					--track: #1e293b;
+				}
+
+				* {
+					box-sizing: border-box;
+				}
+
+				body {
+					margin: 0;
+					min-height: 100vh;
+					background: var(--bg);
+					color: var(--text);
+					display: grid;
+					place-items: center;
+				}
+
+				.pip-card {
+					width: 100%;
+					min-height: 100vh;
+					padding: 18px;
+					background: var(--panel);
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					gap: 14px;
+				}
+
+				.pip-mode {
+					margin: 0;
+					font-size: 0.8rem;
+					font-weight: 800;
+					color: var(--muted);
+					letter-spacing: 0.08em;
+					text-transform: uppercase;
+				}
+
+				.pip-ring {
+					--timer-progress: 0deg;
+					--timer-size: min(220px, 72vmin);
+					width: var(--timer-size);
+					aspect-ratio: 1;
+					border-radius: 50%;
+					display: grid;
+					place-items: center;
+					background:
+						radial-gradient(circle, var(--panel) 0 63%, transparent 64%),
+						conic-gradient(
+							from -90deg,
+							var(--primary) 0deg,
+							var(--secondary) var(--timer-progress),
+							var(--track) var(--timer-progress),
+							var(--track) 360deg
+						);
+				}
+
+				.pip-ring-inner {
+					width: calc(100% - 28px);
+					height: calc(100% - 28px);
+					border-radius: 50%;
+					background: var(--panel);
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+				}
+
+				.pip-time {
+					font-size: clamp(3rem, 18vmin, 4.4rem);
+					line-height: 1;
+					font-weight: 900;
+					font-variant-numeric: tabular-nums;
+					letter-spacing: 0;
+				}
+
+				.pip-unit {
+					font-size: 0.8rem;
+					font-weight: 800;
+					color: var(--muted);
+					letter-spacing: 0.12em;
+				}
+
+				.pip-lines {
+					width: 100%;
+					text-align: center;
+				}
+
+				.pip-task,
+				.pip-session {
+					margin: 0;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+				}
+
+				.pip-task {
+					font-size: 0.95rem;
+					font-weight: 800;
+				}
+
+				.pip-session {
+					margin-top: 4px;
+					font-size: 0.8rem;
+					color: var(--muted);
+				}
+
+				.pip-controls {
+					display: flex;
+					gap: 8px;
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+
+				button {
+					border: 1px solid var(--border);
+					border-radius: 999px;
+					padding: 9px 14px;
+					background: var(--panel);
+					color: var(--muted);
+					font: inherit;
+					font-size: 0.8rem;
+					font-weight: 800;
+					cursor: pointer;
+				}
+
+				.pip-toggle {
+					border-color: transparent;
+					background: linear-gradient(135deg, var(--primary), var(--secondary));
+					color: #fff;
+				}
+			</style>
+			<main class="pip-card" aria-label="FocusFlow timer picture in picture">
+				<p class="pip-mode" id="pipMode"></p>
+				<div class="pip-ring" id="pipRing">
+					<div class="pip-ring-inner">
+						<div class="pip-time" id="pipTime" role="timer" aria-live="polite"></div>
+						<div class="pip-unit">MIN</div>
+					</div>
+				</div>
+				<div class="pip-lines">
+					<p class="pip-task" id="pipTask"></p>
+					<p class="pip-session" id="pipSession"></p>
+				</div>
+				<div class="pip-controls">
+					<button class="pip-toggle" id="pipToggle" type="button"></button>
+					<button id="pipReset" type="button">Reset</button>
+					<button id="pipSkip" type="button">Skip</button>
+				</div>
+			</main>
+		`;
+	}
+
+	function updateTimerPipButton(isOpen) {
+		const { timerPipBtn } = app.el;
+
+		timerPipBtn.setAttribute("aria-pressed", String(isOpen));
+		timerPipBtn.setAttribute(
+			"aria-label",
+			isOpen ? "Close timer picture in picture" : "Open timer picture in picture",
+		);
+	}
+
+	function closeTimerPip() {
+		if (timerPipWindow && !timerPipWindow.closed) {
+			timerPipWindow.close();
+		}
+
+		timerPipWindow = null;
+		updateTimerPipButton(false);
+	}
+
+	function attachTimerPipEvents(pipDocument) {
+		pipDocument.getElementById("pipToggle").addEventListener("click", () => {
+			if (app.state.isRunning) {
+				app.pauseTimer();
+				return;
+			}
+
+			startTimer();
+		});
+
+		pipDocument.getElementById("pipReset").addEventListener("click", resetTimer);
+		pipDocument.getElementById("pipSkip").addEventListener("click", skipSession);
+	}
+
+	app.renderTimerPip = function renderTimerPip() {
+		if (!timerPipWindow || timerPipWindow.closed) return;
+
+		const pipDocument = timerPipWindow.document;
+		const theme = document.documentElement.getAttribute("data-theme") || "light";
+		const toggleButton = pipDocument.getElementById("pipToggle");
+
+		pipDocument.documentElement.setAttribute("data-theme", theme);
+		pipDocument.getElementById("pipMode").textContent = getModeLabel(
+			app.state.mode,
+		);
+		pipDocument.getElementById("pipTime").textContent = app.formatTime(
+			app.state.secondsLeft,
+		);
+		pipDocument
+			.getElementById("pipRing")
+			.style.setProperty("--timer-progress", `${getTimerProgress()}deg`);
+		pipDocument.getElementById("pipTask").textContent =
+			app.el.activeTaskLine.textContent;
+		pipDocument.getElementById("pipSession").textContent =
+			app.el.sessionCountLine.textContent;
+		toggleButton.textContent = app.state.isRunning ? "Pause" : "Start";
+		toggleButton.setAttribute(
+			"aria-label",
+			app.state.isRunning ? "Pause timer" : "Start timer",
+		);
+	};
+
+	async function toggleTimerPip() {
+		if (timerPipWindow && !timerPipWindow.closed) {
+			closeTimerPip();
+			return;
+		}
+
+		if (!("documentPictureInPicture" in window)) {
+			app.showToast("Picture in Picture is not supported in this browser.");
+			return;
+		}
+
+		try {
+			timerPipWindow = await window.documentPictureInPicture.requestWindow({
+				width: 360,
+				height: 430,
+			});
+
+			timerPipWindow.document.body.innerHTML = getTimerPipMarkup();
+			attachTimerPipEvents(timerPipWindow.document);
+			timerPipWindow.addEventListener("pagehide", () => {
+				timerPipWindow = null;
+				updateTimerPipButton(false);
+			});
+
+			updateTimerPipButton(true);
+			app.renderTimerPip();
+		} catch (err) {
+			timerPipWindow = null;
+			updateTimerPipButton(false);
+		}
+	}
+
 	app.setMode = function setMode(mode, { resetTime = true } = {}) {
 		const { el, state } = app;
 		state.mode = mode;
@@ -79,9 +356,7 @@
 
 	app.renderTimerDisplay = function renderTimerDisplay() {
 		const time = app.formatTime(app.state.secondsLeft);
-		const duration = app.DURATIONS[app.state.mode] || app.state.secondsLeft;
-		const elapsed = Math.max(0, duration - app.state.secondsLeft);
-		const progress = duration > 0 ? Math.min(360, (elapsed / duration) * 360) : 0;
+		const progress = getTimerProgress();
 		const timerRing = app.el.timerDisplay.closest(".timer-ring");
 
 		app.el.timerDisplay.textContent = time;
@@ -90,6 +365,7 @@
 		}
 		updateDocumentTitle(time);
 		updateTimerToggleButton();
+		app.renderTimerPip();
 	};
 
 	function updateDocumentTitle(time) {
@@ -275,6 +551,7 @@
 		});
 		el.resetBtn.addEventListener("click", resetTimer);
 		el.skipBtn.addEventListener("click", skipSession);
+		el.timerPipBtn.addEventListener("click", toggleTimerPip);
 		el.timerFullscreenBtn.addEventListener("click", toggleTimerFullscreen);
 
 		el.modeButtons.forEach((button) => {

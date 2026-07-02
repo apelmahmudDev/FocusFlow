@@ -41,6 +41,10 @@
 		el.themeToggle.setAttribute("aria-pressed", String(isDark));
 		el.themeToggle.querySelector(".toggle-icon").innerHTML =
 			getThemeIconMarkup(theme);
+
+		if (app.renderTimerPip) {
+			app.renderTimerPip();
+		}
 	}
 
 	app.initTheme = function initTheme() {

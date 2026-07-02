@@ -14,6 +14,7 @@
 
 		modeButtons: Array.from(document.querySelectorAll(".mode-btn")),
 		timerCard: document.querySelector(".timer-card"),
+		timerPipBtn: document.getElementById("timerPipBtn"),
 		timerFullscreenBtn: document.getElementById("timerFullscreenBtn"),
 		timerCardTitle: document.getElementById("timerCardTitle"),
 		timerDisplay: document.getElementById("timerDisplay"),

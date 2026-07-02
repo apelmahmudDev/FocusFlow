@@ -8,10 +8,12 @@
 .timer-card-actions {
 	display: flex;
 	justify-content: flex-end;
+	gap: 10px;
 	margin-bottom: 12px;
 }
 
-.timer-fullscreen-btn {
+.timer-fullscreen-btn,
+.timer-pip-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -20,7 +22,8 @@
 	color: var(--text-secondary);
 }
 
-.timer-fullscreen-btn svg {
+.timer-fullscreen-btn svg,
+.timer-pip-btn svg {
 	width: 18px;
 	height: 18px;
 	fill: none;
