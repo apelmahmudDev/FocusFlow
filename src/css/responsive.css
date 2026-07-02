@@ -26,7 +26,8 @@
 
 	.header-right {
 		width: 100%;
-		justify-content: space-between;
+		justify-content: center;
+		gap: 18px;
 	}
 
 	.settings-wrap {
