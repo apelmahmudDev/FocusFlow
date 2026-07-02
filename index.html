@@ -113,105 +113,107 @@
 							<h2 id="timerCardTitle">Focus period</h2>
 						</div>
 
-						<div class="timer-card-actions">
-							<button
-								id="timerPipBtn"
-								class="btn btn-ghost btn-icon-only timer-pip-btn"
-								aria-label="Open timer picture in picture"
-								aria-pressed="false"
-							>
-								<svg
-									viewBox="0 0 24 24"
-									fill="none"
-									aria-hidden="true"
-									focusable="false"
+						<div class="timer-top-row">
+							<div class="timer-card-actions">
+								<button
+									id="timerPipBtn"
+									class="btn btn-ghost btn-icon-only timer-pip-btn"
+									aria-label="Open timer picture in picture"
+									aria-pressed="false"
 								>
-									<rect
-										x="3"
-										y="5"
-										width="18"
-										height="14"
-										rx="2"
-										stroke="currentColor"
-										stroke-width="2"
-									/>
-									<rect
-										x="12"
-										y="12"
-										width="6"
-										height="4"
-										rx="1"
-										stroke="currentColor"
-										stroke-width="2"
-									/>
-								</svg>
-								<span class="visually-hidden">Open timer picture in picture</span>
-							</button>
-							<button
-								id="timerFullscreenBtn"
-								class="btn btn-ghost btn-icon-only timer-fullscreen-btn"
-								aria-label="Expand timer card"
-								aria-pressed="false"
-							>
-								<svg
-									class="timer-expand-icon"
-									viewBox="0 0 24 24"
-									fill="none"
-									aria-hidden="true"
-									focusable="false"
+									<svg
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+										focusable="false"
+									>
+										<rect
+											x="3"
+											y="5"
+											width="18"
+											height="14"
+											rx="2"
+											stroke="currentColor"
+											stroke-width="2"
+										/>
+										<rect
+											x="12"
+											y="12"
+											width="6"
+											height="4"
+											rx="1"
+											stroke="currentColor"
+											stroke-width="2"
+										/>
+									</svg>
+									<span class="visually-hidden">Open timer picture in picture</span>
+								</button>
+								<button
+									id="timerFullscreenBtn"
+									class="btn btn-ghost btn-icon-only timer-fullscreen-btn"
+									aria-label="Expand timer card"
+									aria-pressed="false"
 								>
-									<path
-										d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M8 21H4a1 1 0 0 1-1-1v-4M16 21h4a1 1 0 0 0 1-1v-4"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-								<svg
-									class="timer-shrink-icon"
-									viewBox="0 0 24 24"
-									fill="none"
-									aria-hidden="true"
-									focusable="false"
-								>
-									<path
-										d="M9 3v4a2 2 0 0 1-2 2H3M15 3v4a2 2 0 0 0 2 2h4M9 21v-4a2 2 0 0 0-2-2H3M15 21v-4a2 2 0 0 1 2-2h4"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round"
-									/>
-								</svg>
-								<span class="visually-hidden">Toggle timer fullscreen</span>
-							</button>
-						</div>
+									<svg
+										class="timer-expand-icon"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+										focusable="false"
+									>
+										<path
+											d="M8 3H4a1 1 0 0 0-1 1v4M16 3h4a1 1 0 0 1 1 1v4M8 21H4a1 1 0 0 1-1-1v-4M16 21h4a1 1 0 0 0 1-1v-4"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+									<svg
+										class="timer-shrink-icon"
+										viewBox="0 0 24 24"
+										fill="none"
+										aria-hidden="true"
+										focusable="false"
+									>
+										<path
+											d="M9 3v4a2 2 0 0 1-2 2H3M15 3v4a2 2 0 0 0 2 2h4M9 21v-4a2 2 0 0 0-2-2H3M15 21v-4a2 2 0 0 1 2-2h4"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+									<span class="visually-hidden">Toggle timer fullscreen</span>
+								</button>
+							</div>
 
-						<div class="mode-switcher" role="tablist" aria-label="Timer mode">
-							<button
-								class="mode-btn active"
-								data-mode="focus"
-								role="tab"
-								aria-selected="true"
-							>
-								Focus
-							</button>
-							<button
-								class="mode-btn"
-								data-mode="short"
-								role="tab"
-								aria-selected="false"
-							>
-								Short Break
-							</button>
-							<button
-								class="mode-btn"
-								data-mode="long"
-								role="tab"
-								aria-selected="false"
-							>
-								Long Break
-							</button>
+							<div class="mode-switcher" role="tablist" aria-label="Timer mode">
+								<button
+									class="mode-btn active"
+									data-mode="focus"
+									role="tab"
+									aria-selected="true"
+								>
+									Focus
+								</button>
+								<button
+									class="mode-btn"
+									data-mode="short"
+									role="tab"
+									aria-selected="false"
+								>
+									Short Break
+								</button>
+								<button
+									class="mode-btn"
+									data-mode="long"
+									role="tab"
+									aria-selected="false"
+								>
+									Long Break
+								</button>
+							</div>
 						</div>
 
 						<div class="timer-display-wrap">
@@ -266,7 +268,7 @@
 									<rect x="7" y="5" width="4" height="14" rx="1.2" />
 									<rect x="13" y="5" width="4" height="14" rx="1.2" />
 								</svg>
-								<span class="timer-toggle-label">Start</span>
+								<span class="visually-hidden">Start</span>
 							</button>
 							<button
 								id="resetBtn"
@@ -295,7 +297,7 @@
 										stroke-linejoin="round"
 									/>
 								</svg>
-								<span>Reset</span>
+								<span class="visually-hidden">Reset</span>
 							</button>
 							<button
 								id="skipBtn"
@@ -307,7 +309,7 @@
 										d="M5 5.6v12.8c0 .7.78 1.11 1.36.72l8.95-6.4a.88.88 0 0 0 0-1.44L6.36 4.88A.86.86 0 0 0 5 5.6Zm13 0v12.8h2V5.6h-2Z"
 									/>
 								</svg>
-								<span>Skip</span>
+								<span class="visually-hidden">Skip</span>
 							</button>
 						</div>
 					</div>

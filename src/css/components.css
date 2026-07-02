@@ -89,11 +89,9 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	gap: 8px;
-}
-
-.timer-toggle-btn {
-	min-width: 120px;
+	width: 46px;
+	height: 46px;
+	padding: 0;
 }
 
 .timer-toggle-btn .timer-toggle-icon-start,

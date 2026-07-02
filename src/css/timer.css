@@ -5,11 +5,19 @@
 	position: relative;
 }
 
+.timer-top-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 22px;
+}
+
 .timer-card-actions {
+	order: 2;
 	display: flex;
 	justify-content: flex-end;
 	gap: 10px;
-	margin-bottom: 12px;
+	flex: 0 0 auto;
 }
 
 .timer-fullscreen-btn,
@@ -59,13 +67,10 @@
 }
 
 .timer-card.is-fullscreen .timer-card-actions {
-	position: absolute;
-	top: clamp(16px, 3vw, 28px);
-	right: clamp(16px, 3vw, 28px);
 	margin: 0;
 }
 
-.timer-card.is-fullscreen .mode-switcher,
+.timer-card.is-fullscreen .timer-top-row,
 .timer-card.is-fullscreen .active-task-info,
 .timer-card.is-fullscreen .timer-controls {
 	width: min(640px, 100%);
@@ -82,14 +87,16 @@ body.timer-fullscreen-open {
 }
 
 .mode-switcher {
+	order: 1;
 	display: flex;
 	gap: 0;
+	flex: 1 1 auto;
 	background: var(--bg-elevated);
 	border: 1px solid var(--border);
 	box-shadow: var(--shadow-soft);
 	padding: 0;
 	border-radius: var(--radius-md);
-	margin-bottom: 22px;
+	margin-bottom: 0;
 	flex-wrap: wrap;
 	overflow: hidden;
 }

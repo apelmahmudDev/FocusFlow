@@ -25,7 +25,7 @@
 					<rect x="7" y="5" width="4" height="14" rx="1.2"></rect>
 					<rect x="13" y="5" width="4" height="14" rx="1.2"></rect>
 				</svg>
-				<span class="timer-toggle-label">Pause</span>
+				<span class="visually-hidden">Pause</span>
 			`;
 		}
 
@@ -33,7 +33,7 @@
 			<svg class="timer-toggle-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
 				<path d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"></path>
 			</svg>
-			<span class="timer-toggle-label">Start</span>
+			<span class="visually-hidden">Start</span>
 		`;
 	}
 
@@ -44,7 +44,7 @@
 					<rect x="7" y="5" width="4" height="14" rx="1.2"></rect>
 					<rect x="13" y="5" width="4" height="14" rx="1.2"></rect>
 				</svg>
-				<span>Pause</span>
+				<span class="pip-visually-hidden">Pause</span>
 			`;
 		}
 
@@ -52,7 +52,7 @@
 			<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
 				<path d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"></path>
 			</svg>
-			<span>Start</span>
+			<span class="pip-visually-hidden">Start</span>
 		`;
 	}
 
@@ -252,7 +252,9 @@
 				button {
 					border: 1px solid var(--border);
 					border-radius: 999px;
-					padding: 9px 14px;
+					width: 42px;
+					height: 42px;
+					padding: 0;
 					background: var(--panel);
 					color: var(--muted);
 					display: inline-flex;
@@ -263,6 +265,18 @@
 					font-size: 0.8rem;
 					font-weight: 800;
 					cursor: pointer;
+				}
+
+				.pip-visually-hidden {
+					position: absolute;
+					width: 1px;
+					height: 1px;
+					padding: 0;
+					margin: -1px;
+					overflow: hidden;
+					clip: rect(0, 0, 0, 0);
+					white-space: nowrap;
+					border: 0;
 				}
 
 				button svg {
@@ -313,13 +327,13 @@
 								stroke-linejoin="round"
 							/>
 						</svg>
-						<span>Reset</span>
+						<span class="pip-visually-hidden">Reset</span>
 					</button>
 					<button id="pipSkip" type="button">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
 							<path d="M5 5.6v12.8c0 .7.78 1.11 1.36.72l8.95-6.4a.88.88 0 0 0 0-1.44L6.36 4.88A.86.86 0 0 0 5 5.6Zm13 0v12.8h2V5.6h-2Z" />
 						</svg>
-						<span>Skip</span>
+						<span class="pip-visually-hidden">Skip</span>
 					</button>
 				</div>
 			</main>
