@@ -9,6 +9,9 @@
 		settingsFocusInput: document.getElementById("settingsFocusInput"),
 		settingsShortInput: document.getElementById("settingsShortInput"),
 		settingsLongInput: document.getElementById("settingsLongInput"),
+		cleanupHourInput: document.getElementById("cleanupHourInput"),
+		cleanupMinuteInput: document.getElementById("cleanupMinuteInput"),
+		cleanupPeriodInput: document.getElementById("cleanupPeriodInput"),
 		settingsResetBtn: document.getElementById("settingsResetBtn"),
 		settingsSaveBtn: document.getElementById("settingsSaveBtn"),
 

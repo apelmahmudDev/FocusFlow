@@ -189,6 +189,42 @@
 										step="1"
 									/>
 								</label>
+								<div class="settings-field settings-field-full">
+									<span>Clear daily progress and completed tasks</span>
+									<div class="cleanup-time-grid" role="group" aria-label="Daily cleanup time">
+										<input
+											id="cleanupHourInput"
+											class="input cleanup-time-input"
+											type="number"
+											min="1"
+											max="12"
+											step="1"
+											inputmode="numeric"
+											aria-label="Cleanup hour"
+										/>
+										<input
+											id="cleanupMinuteInput"
+											class="input cleanup-time-input"
+											type="number"
+											min="0"
+											max="59"
+											step="1"
+											inputmode="numeric"
+											aria-label="Cleanup minute"
+										/>
+										<select
+											id="cleanupPeriodInput"
+											class="select cleanup-period-input"
+											aria-label="Cleanup period"
+										>
+											<option value="AM">AM</option>
+											<option value="PM">PM</option>
+										</select>
+									</div>
+									<span class="settings-hint">
+										Default is end of day. Only completed tasks, session history, and daily progress are cleared.
+									</span>
+								</div>
 							</div>
 							<div class="settings-actions">
 								<button id="settingsResetBtn" class="btn btn-ghost btn-small">
@@ -626,7 +662,9 @@
 						<div class="card-heading history-heading-row">
 							<div>
 								<h2>Session History</h2>
-								<p id="historyCount" class="history-count">No sessions logged</p>
+								<p id="historyCount" class="card-subtext history-count">
+									Review your completed focus and break sessions.
+								</p>
 							</div>
 							<button
 								id="clearHistoryBtn"

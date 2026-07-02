@@ -7,13 +7,14 @@
 }
 
 .history-heading-row h2 {
-	margin-bottom: 4px;
+	margin-bottom: 7px;
+}
+
+.history-card .card-subtext {
+	margin-bottom: 0;
 }
 
 .history-count {
-	margin: 0;
-	font-size: var(--text-xs);
-	font-weight: 700;
 	color: var(--text-muted);
 }
 

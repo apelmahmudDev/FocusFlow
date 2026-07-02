@@ -8,6 +8,7 @@
 		theme: "focusflow_theme",
 		sound: "focusflow_sound",
 		durations: "focusflow_durations",
+		dailyCleanup: "focusflow_daily_cleanup",
 		activeTaskId: "focusflow_active_task_id",
 		sessionsBeforeLongBreak: "focusflow_sessions_completed_cycle",
 		timer: "focusflow_timer",
@@ -29,6 +30,7 @@
 
 	app.SESSIONS_UNTIL_LONG_BREAK = 4;
 	app.DEFAULT_GOAL_MINUTES = 120;
+	app.DEFAULT_DAILY_CLEANUP_TIME = "23:59";
 	app.CATEGORIES = ["Study", "Coding", "Reading", "Writing", "Other"];
 	app.APP_TITLE = "FocusFlow - Pomodoro Focus Timer";
 })((window.FocusFlow = window.FocusFlow || {}));

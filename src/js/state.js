@@ -14,6 +14,7 @@
 	}
 
 	const savedDurations = app.loadJSON(STORAGE_KEYS.durations, null);
+	const savedDailyCleanup = app.loadJSON(STORAGE_KEYS.dailyCleanup, null);
 	app.DURATIONS = {
 		focus: normalizeDuration(
 			savedDurations && savedDurations.focus,
@@ -39,6 +40,16 @@
 		history: app.loadJSON(STORAGE_KEYS.history, []),
 		activeTaskId: app.loadJSON(STORAGE_KEYS.activeTaskId, null),
 		dailyGoal: app.loadJSON(STORAGE_KEYS.goal, DEFAULT_GOAL_MINUTES),
+		dailyCleanup: {
+			time:
+				savedDailyCleanup && typeof savedDailyCleanup.time === "string"
+					? savedDailyCleanup.time
+					: app.DEFAULT_DAILY_CLEANUP_TIME,
+			lastRunDate:
+				savedDailyCleanup && typeof savedDailyCleanup.lastRunDate === "string"
+					? savedDailyCleanup.lastRunDate
+					: null,
+		},
 		soundOn: app.loadJSON(STORAGE_KEYS.sound, true),
 		sessionsCompletedInCycle: app.loadJSON(
 			STORAGE_KEYS.sessionsBeforeLongBreak,
@@ -78,6 +89,10 @@
 			short: app.DURATIONS.short / 60,
 			long: app.DURATIONS.long / 60,
 		});
+	};
+
+	app.persistDailyCleanup = function persistDailyCleanup() {
+		app.saveJSON(STORAGE_KEYS.dailyCleanup, app.state.dailyCleanup);
 	};
 
 	app.persistCycle = function persistCycle() {

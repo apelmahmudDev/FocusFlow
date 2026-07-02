@@ -72,6 +72,7 @@
 		app.initHistory();
 
 		normalizeStoredTasks();
+		app.initDailyCleanup();
 		app.restoreTimer();
 		app.renderTaskList();
 		app.renderHistory();
