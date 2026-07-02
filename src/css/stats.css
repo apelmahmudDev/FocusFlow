@@ -32,7 +32,18 @@
 .stat-icon svg {
 	width: 24px;
 	height: 24px;
+	color: #ffffff;
+	fill: none;
+}
+
+.stat-icon svg path:not([stroke]),
+.stat-icon svg circle:not([stroke]) {
 	fill: currentColor;
+}
+
+.stat-icon svg [stroke] {
+	stroke: currentColor;
+	fill: none;
 }
 
 .stat-box-blue .stat-icon {
