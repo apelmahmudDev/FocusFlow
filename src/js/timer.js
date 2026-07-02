@@ -63,8 +63,15 @@
 
 	app.renderTimerDisplay = function renderTimerDisplay() {
 		const time = app.formatTime(app.state.secondsLeft);
+		const duration = app.DURATIONS[app.state.mode] || app.state.secondsLeft;
+		const elapsed = Math.max(0, duration - app.state.secondsLeft);
+		const progress = duration > 0 ? Math.min(360, (elapsed / duration) * 360) : 0;
+		const timerRing = app.el.timerDisplay.closest(".timer-ring");
 
 		app.el.timerDisplay.textContent = time;
+		if (timerRing) {
+			timerRing.style.setProperty("--timer-progress", `${progress}deg`);
+		}
 		updateDocumentTitle(time);
 		updateTimerToggleButton();
 	};

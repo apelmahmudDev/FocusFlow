@@ -1,12 +1,19 @@
 .card {
-	background: var(--bg-secondary);
+	background: var(--bg-elevated);
 	border: 1px solid var(--border);
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow);
-	padding: 28px;
+	padding: 28px 30px;
 	transition:
 		background var(--transition-base),
 		border-color var(--transition-base);
+}
+
+.stats-card .card-heading,
+.history-heading-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
 }
 
 .card-heading h2 {
@@ -15,16 +22,34 @@
 	margin: 0 0 4px 0;
 }
 
+.section-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	flex: 0 0 34px;
+	color: var(--accent-primary);
+}
+
+.section-icon svg {
+	width: 30px;
+	height: 30px;
+	fill: currentColor;
+}
+
 .card-heading p:last-child {
 	margin-bottom: 0;
 }
 
 .btn-icon-only {
-	width: 44px;
-	height: 44px;
+	width: 54px;
+	height: 54px;
 	padding: 0;
 	justify-content: center;
 	border-radius: 50%;
+	background: var(--bg-elevated);
+	box-shadow: var(--shadow-soft);
 }
 
 .btn-icon-only svg,
@@ -137,7 +162,7 @@
 }
 
 .btn {
-	border: none;
+	border: 1px solid transparent;
 	border-radius: 999px;
 	padding: 12px 20px;
 	font-weight: 700;
@@ -171,7 +196,7 @@
 		var(--accent-secondary)
 	);
 	color: #ffffff;
-	box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+	box-shadow: 0 10px 20px rgba(37, 99, 235, 0.22);
 }
 
 .btn-secondary {
@@ -180,14 +205,16 @@
 }
 
 .btn-ghost {
-	background: transparent;
+	background: var(--bg-elevated);
 	color: var(--text-secondary);
 	border: 1px solid var(--border);
+	box-shadow: var(--shadow-soft);
 }
 
 .btn-danger {
-	background: rgba(239, 68, 68, 0.1);
+	background: rgba(239, 68, 68, 0.06);
 	color: var(--danger);
+	border-color: rgba(239, 68, 68, 0.28);
 }
 
 .btn-full {
@@ -231,7 +258,7 @@
 }
 
 .badge-active {
-	background: var(--accent-primary);
+	background: var(--accent-secondary);
 	color: #ffffff;
 }
 
@@ -273,8 +300,8 @@
 	width: 100%;
 	border: 1px solid var(--border);
 	border-radius: var(--radius-md);
-	padding: 12px 14px;
-	background: var(--bg-secondary);
+	padding: 13px 16px;
+	background: var(--bg-elevated);
 	color: var(--text-primary);
 	outline: none;
 	font-size: var(--text-sm);
@@ -286,5 +313,5 @@
 .input:focus,
 .select:focus {
 	border-color: var(--accent-primary);
-	box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.14);
+	box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }

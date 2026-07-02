@@ -19,6 +19,14 @@
 	border: 1px solid var(--border);
 	border-radius: var(--radius-md);
 	padding: 14px 16px;
+	display: grid;
+	grid-template-columns: 50px minmax(0, 1fr) auto;
+	grid-template-areas:
+		"icon top top"
+		"icon meta meta"
+		"icon actions actions";
+	column-gap: 16px;
+	align-items: center;
 	transition:
 		background var(--transition-fast),
 		border-color var(--transition-fast),
@@ -27,14 +35,34 @@
 
 .task-item.is-active {
 	border-color: var(--accent-primary);
-	background: var(--accent-soft);
+	background: linear-gradient(180deg, rgba(37, 99, 235, 0.06), rgba(15, 159, 148, 0.04));
 }
 
 .task-item.is-completed {
 	opacity: 0.55;
 }
 
+.task-item-icon {
+	grid-area: icon;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 12px;
+	background: var(--accent-soft);
+	border: 1px solid rgba(37, 99, 235, 0.24);
+	color: var(--accent-primary);
+}
+
+.task-item-icon svg {
+	width: 24px;
+	height: 24px;
+	fill: currentColor;
+}
+
 .task-item-top {
+	grid-area: top;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -52,13 +80,28 @@
 }
 
 .task-meta {
+	grid-area: meta;
 	font-size: var(--text-xs);
 	color: var(--text-secondary);
 	margin: 0 0 12px 0;
 }
 
 .task-actions {
+	grid-area: actions;
 	display: flex;
 	gap: 8px;
 	flex-wrap: wrap;
+}
+
+.task-actions .btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.task-actions svg {
+	width: 15px;
+	height: 15px;
+	fill: currentColor;
+	flex: 0 0 15px;
 }

@@ -23,6 +23,12 @@
 		listItem.classList.toggle("is-active", task.id === app.state.activeTaskId);
 		listItem.classList.toggle("is-completed", task.completed);
 
+		const icon = document.createElement("span");
+		icon.className = "task-item-icon";
+		icon.setAttribute("aria-hidden", "true");
+		icon.innerHTML =
+			'<svg viewBox="0 0 24 24" focusable="false"><path d="M8.7 16.3 4.4 12l4.3-4.3 1.4 1.4L7.2 12l2.9 2.9-1.4 1.4Zm6.6 0-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 4.3 4.3-4.3 4.3ZM12.8 6l1.9.6-3.5 11.4-1.9-.6L12.8 6Z"></path></svg>';
+		listItem.appendChild(icon);
 		listItem.appendChild(createTaskHeader(task));
 		listItem.appendChild(createTaskMeta(task));
 		listItem.appendChild(createTaskActions(task));
@@ -81,8 +87,9 @@
 	function createSetActiveButton(task) {
 		const button = document.createElement("button");
 		button.className = "btn btn-secondary btn-small";
-		button.textContent =
-			task.id === app.state.activeTaskId ? "Active" : "Set Active";
+		button.innerHTML =
+			'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13a.9.9 0 0 0 1.42.74l9.1-6.5a.9.9 0 0 0 0-1.48l-9.1-6.5A.9.9 0 0 0 8 5.5Z"></path></svg>' +
+			(task.id === app.state.activeTaskId ? "Active" : "Set Active");
 		button.disabled = task.id === app.state.activeTaskId || task.completed;
 		button.setAttribute("aria-label", `Set "${task.title}" as active task`);
 		button.addEventListener("click", () => setActiveTask(task.id));
@@ -93,7 +100,9 @@
 	function createCompleteButton(task) {
 		const button = document.createElement("button");
 		button.className = "btn btn-ghost btn-small";
-		button.textContent = task.completed ? "Undo" : "Complete";
+		button.innerHTML =
+			'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.6 16.6 4.9 11.9l1.4-1.4 3.3 3.3 8.1-8.1 1.4 1.4-9.5 9.5Z"></path></svg>' +
+			(task.completed ? "Undo" : "Complete");
 		button.setAttribute(
 			"aria-label",
 			`Mark "${task.title}" as ${task.completed ? "incomplete" : "complete"}`,
@@ -106,7 +115,8 @@
 	function createDeleteButton(task) {
 		const button = document.createElement("button");
 		button.className = "btn btn-danger btn-small";
-		button.textContent = "Delete";
+		button.innerHTML =
+			'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 9h2v9H8V9Zm6 0h2v9h-2V9ZM5 6h14v2H5V6Zm3-3h8v2H8V3Zm-1 6h2v11h6V9h2v11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V9Z"></path></svg>Delete';
 		button.setAttribute("aria-label", `Delete task "${task.title}"`);
 		button.addEventListener("click", () => deleteTask(task.id));
 

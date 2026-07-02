@@ -1,25 +1,24 @@
 .timer-card {
-	background: linear-gradient(
-		180deg,
-		var(--bg-secondary) 0%,
-		var(--bg-soft) 130%
-	);
-	padding: 32px;
+	background: var(--bg-elevated);
+	padding: 30px;
 	min-height: 100%;
 }
 
 .mode-switcher {
 	display: flex;
-	gap: 8px;
-	background: var(--bg-soft);
-	padding: 6px;
+	gap: 0;
+	background: var(--bg-elevated);
+	border: 1px solid var(--border);
+	box-shadow: var(--shadow-soft);
+	padding: 0;
 	border-radius: var(--radius-md);
-	margin-bottom: 24px;
+	margin-bottom: 22px;
 	flex-wrap: wrap;
+	overflow: hidden;
 }
 
 .timer-card .card-heading {
-	margin-bottom: 18px;
+	display: none;
 }
 
 .stats-card .card-heading {
@@ -34,7 +33,7 @@
 	color: var(--text-secondary);
 	font-weight: 700;
 	font-size: var(--text-sm);
-	padding: 10px 14px;
+	padding: 16px 18px;
 	border-radius: var(--radius-sm);
 	cursor: pointer;
 	transition:
@@ -50,17 +49,84 @@
 		var(--accent-secondary)
 	);
 	color: #ffffff;
-	box-shadow: 0 6px 14px rgba(99, 102, 241, 0.3);
+	box-shadow: 0 10px 22px rgba(37, 99, 235, 0.28);
 }
 
 .timer-display-wrap {
 	display: flex;
 	justify-content: center;
-	padding: 20px 0 12px;
+	padding: 2px 0 10px;
+}
+
+.timer-ring {
+	--timer-progress: 0deg;
+	--timer-size: min(330px, 74vw);
+	--timer-track: 17px;
+	--timer-dot: 28px;
+	--timer-dot-radius: calc((var(--timer-size) - var(--timer-track)) / 2);
+	width: var(--timer-size);
+	aspect-ratio: 1;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	background:
+		radial-gradient(circle, var(--bg-elevated) 0 63%, transparent 64%),
+		conic-gradient(
+			from -90deg,
+			var(--accent-primary) 0deg,
+			var(--accent-secondary) var(--timer-progress),
+			#e9effa var(--timer-progress),
+			#e9effa 360deg
+		);
+	position: relative;
+	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.42);
+}
+
+.timer-ring::after {
+	content: "";
+	position: absolute;
+	z-index: 2;
+	width: var(--timer-dot);
+	height: var(--timer-dot);
+	border-radius: 50%;
+	background: linear-gradient(135deg, #2563eb, #1d8de8);
+	border: 4px solid var(--bg-elevated);
+	box-shadow:
+		0 8px 20px rgba(37, 99, 235, 0.34),
+		0 0 0 1px rgba(37, 99, 235, 0.12);
+	left: 50%;
+	top: 50%;
+	margin-left: calc(var(--timer-dot) / -2);
+	margin-top: calc(var(--timer-dot) / -2);
+	transform: rotate(calc(var(--timer-progress) - 90deg))
+		translateY(calc(var(--timer-dot-radius) * -1));
+	transform-origin: center;
+}
+
+.timer-ring-inner {
+	position: relative;
+	z-index: 1;
+	width: calc(100% - 34px);
+	height: calc(100% - 34px);
+	border-radius: 50%;
+	background: var(--bg-elevated);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	box-shadow: inset 0 0 28px rgba(37, 99, 235, 0.04);
+}
+
+.timer-mode-icon {
+	width: 34px;
+	height: 34px;
+	color: var(--text-secondary);
+	fill: currentColor;
 }
 
 .timer-display {
-	font-size: clamp(3rem, 8vw, 5.5rem);
+	font-size: clamp(3.4rem, 7vw, 5.5rem);
 	font-weight: 800;
 	letter-spacing: 0;
 	font-variant-numeric: tabular-nums;
@@ -85,7 +151,7 @@
 
 .active-task-info {
 	text-align: center;
-	margin-bottom: 24px;
+	margin-bottom: 18px;
 }
 
 .active-task-line {

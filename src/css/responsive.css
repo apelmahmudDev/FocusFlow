@@ -14,7 +14,8 @@
 
 @media (max-width: 640px) {
 	.app-container {
-		padding-top: 20px;
+		width: min(100% - 20px, 1340px);
+		padding: 20px 0 28px;
 	}
 
 	.app-header {
@@ -23,10 +24,11 @@
 
 	.header-right {
 		width: 100%;
+		justify-content: space-between;
 	}
 
 	.settings-wrap {
-		width: 100%;
+		width: auto;
 	}
 
 	.settings-popover {
@@ -36,7 +38,6 @@
 	}
 
 	.header-right .btn {
-		flex: 1;
 		justify-content: center;
 	}
 
@@ -58,7 +59,38 @@
 	}
 
 	.stats-grid {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 1fr;
+	}
+
+	.goal-form {
+		grid-template-columns: 1fr;
+	}
+
+	.task-item {
+		grid-template-columns: 44px minmax(0, 1fr);
+		grid-template-areas:
+			"icon top"
+			"icon meta"
+			"actions actions";
+	}
+
+	.task-item-icon {
+		width: 44px;
+		height: 44px;
+	}
+
+	.history-item {
+		grid-template-columns: 46px minmax(0, 1fr);
+	}
+
+	.history-item-icon {
+		width: 46px;
+		height: 46px;
+	}
+
+	.history-item-duration {
+		grid-column: 2;
+		padding-top: 0;
 	}
 
 	.toast {

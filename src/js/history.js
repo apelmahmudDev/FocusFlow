@@ -16,8 +16,15 @@
 			const listItem = document.createElement("li");
 			listItem.className = "history-item";
 
-			const top = document.createElement("div");
-			top.className = "history-item-top";
+			const icon = document.createElement("span");
+			icon.className = "history-item-icon";
+			icon.setAttribute("aria-hidden", "true");
+			icon.innerHTML =
+				'<svg viewBox="0 0 24 24" focusable="false"><path d="M12 2 15 5h4v4l3 3-3 3v4h-4l-3 3-3-3H5v-4l-3-3 3-3V5h4l3-3Zm0 6a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4Z"></path></svg>';
+			listItem.appendChild(icon);
+
+			const content = document.createElement("div");
+			content.className = "history-item-content";
 
 			const badge = document.createElement("span");
 			badge.className =
@@ -26,16 +33,21 @@
 
 			const title = document.createElement("p");
 			title.className = "history-item-title";
-			title.textContent = `${item.taskName} - ${item.durationMinutes} min`;
+			title.textContent = item.taskName;
 
-			top.appendChild(badge);
-			listItem.appendChild(top);
-			listItem.appendChild(title);
+			content.appendChild(badge);
+			content.appendChild(title);
 
 			const time = document.createElement("p");
 			time.className = "history-item-time";
 			time.textContent = app.formatHistoryDate(item.completedAt);
-			listItem.appendChild(time);
+			content.appendChild(time);
+			listItem.appendChild(content);
+
+			const duration = document.createElement("span");
+			duration.className = "history-item-duration";
+			duration.textContent = `${item.durationMinutes} min`;
+			listItem.appendChild(duration);
 
 			el.historyList.appendChild(listItem);
 		});
