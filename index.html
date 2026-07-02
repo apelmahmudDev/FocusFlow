@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>FocusFlow - Pomodoro Focus Timer</title>
+		<meta
+			name="description"
+			content="A clean Pomodoro productivity app for students and developers. Plan your tasks, stay focused, track your progress."
+		/>
+		<link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+		<link rel="stylesheet" href="src/css/style.css" />
+	</head>
+	<body>
+		<div class="app-container">
+			<header class="app-header">
+				<div class="header-left">
+					<h1 class="app-title">FocusFlow</h1>
+					<p class="app-subtitle">
+						Plan your tasks, stay focused, track your progress.
+					</p>
+				</div>
+				<div class="header-right">
+					<button
+						id="themeToggle"
+						class="btn btn-ghost btn-pill"
+						aria-label="Toggle dark mode"
+						aria-pressed="false"
+					>
+						<span class="toggle-icon" aria-hidden="true">Theme</span>
+						<span class="toggle-label">Dark</span>
+					</button>
+					<button
+						id="soundToggle"
+						class="btn btn-ghost btn-pill"
+						aria-label="Toggle sound alerts"
+						aria-pressed="true"
+					>
+						<span class="toggle-icon" aria-hidden="true">Audio</span>
+						<span class="toggle-label">Sound</span>
+					</button>
+				</div>
+			</header>
+
+			<main>
+				<section class="dashboard-grid" aria-label="Timer and productivity">
+					<div class="card timer-card">
+						<div class="card-heading">
+							<h2>Pomodoro Timer</h2>
+							<p class="card-subtext">Stay focused. One session at a time.</p>
+						</div>
+
+						<div class="mode-switcher" role="tablist" aria-label="Timer mode">
+							<button
+								class="mode-btn active"
+								data-mode="focus"
+								role="tab"
+								aria-selected="true"
+							>
+								Focus
+							</button>
+							<button
+								class="mode-btn"
+								data-mode="short"
+								role="tab"
+								aria-selected="false"
+							>
+								Short Break
+							</button>
+							<button
+								class="mode-btn"
+								data-mode="long"
+								role="tab"
+								aria-selected="false"
+							>
+								Long Break
+							</button>
+						</div>
+
+						<div class="timer-display-wrap">
+							<div
+								id="timerDisplay"
+								class="timer-display"
+								role="timer"
+								aria-live="polite"
+							>
+								25:00
+							</div>
+						</div>
+
+						<div class="active-task-info">
+							<p id="activeTaskLine" class="active-task-line">
+								No active task selected.
+							</p>
+							<p id="sessionCountLine" class="session-count-line">
+								Session 1 of 4 before long break
+							</p>
+						</div>
+
+						<div class="timer-controls">
+							<button
+								id="startBtn"
+								class="btn btn-primary"
+								aria-label="Start focus timer"
+							>
+								Start
+							</button>
+							<button
+								id="pauseBtn"
+								class="btn btn-secondary"
+								aria-label="Pause timer"
+								disabled
+							>
+								Pause
+							</button>
+							<button
+								id="resetBtn"
+								class="btn btn-ghost"
+								aria-label="Reset timer"
+							>
+								Reset
+							</button>
+							<button
+								id="skipBtn"
+								class="btn btn-ghost"
+								aria-label="Skip to next session"
+							>
+								Skip
+							</button>
+						</div>
+					</div>
+
+					<div class="card stats-card">
+						<div class="card-heading">
+							<h2>Today's Productivity</h2>
+						</div>
+
+						<div class="stats-grid">
+							<div class="stat-box">
+								<span class="stat-number" id="statSessions">0</span>
+								<span class="stat-label">Focus Sessions</span>
+								<span class="stat-helper">Completed focus rounds</span>
+							</div>
+							<div class="stat-box">
+								<span class="stat-number" id="statMinutes">0</span>
+								<span class="stat-label">Focus Minutes</span>
+								<span class="stat-helper">Time spent focused today</span>
+							</div>
+							<div class="stat-box">
+								<span class="stat-number" id="statTotal">0</span>
+								<span class="stat-label">Total Sessions</span>
+								<span class="stat-helper">All-time focus sessions</span>
+							</div>
+							<div class="stat-box">
+								<span class="stat-number stat-number-text" id="statBestCategory"
+									>-</span
+								>
+								<span class="stat-label">Best Category</span>
+								<span class="stat-helper">Most completed pomodoros</span>
+							</div>
+						</div>
+
+						<div class="daily-goal-section">
+							<div class="daily-goal-heading">
+								<h3>Daily Goal</h3>
+								<button
+									id="editGoalBtn"
+									class="btn-link"
+									aria-label="Edit daily focus goal"
+								>
+									Edit
+								</button>
+							</div>
+							<div class="goal-form" id="goalForm" hidden>
+								<label for="goalInput" class="visually-hidden"
+									>Daily goal in minutes</label
+								>
+								<input
+									type="number"
+									id="goalInput"
+									class="input"
+									min="5"
+									step="5"
+								/>
+								<button id="saveGoalBtn" class="btn btn-primary btn-small">
+									Save Goal
+								</button>
+							</div>
+							<p class="goal-progress-text">
+								<span id="goalCurrent">0</span> /
+								<span id="goalTarget">120</span> min
+							</p>
+							<div
+								class="progress-bar-track"
+								role="progressbar"
+								aria-label="Daily goal progress"
+								aria-valuemin="0"
+								aria-valuemax="120"
+								aria-valuenow="0"
+								id="goalProgressBar"
+							>
+								<div
+									class="progress-bar-fill"
+									id="goalProgressFill"
+									style="width: 0%"
+								></div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="content-grid" aria-label="Tasks and history">
+					<div class="card task-card">
+						<div class="card-heading">
+							<h2>Tasks</h2>
+							<p class="card-subtext">
+								Add and select what you want to focus on.
+							</p>
+						</div>
+
+						<form id="taskForm" class="task-form">
+							<div class="form-field">
+								<label for="taskTitleInput">Task Title</label>
+								<input
+									type="text"
+									id="taskTitleInput"
+									class="input"
+									placeholder="Enter task name..."
+									required
+									maxlength="80"
+								/>
+							</div>
+
+							<div class="form-row">
+								<div class="form-field">
+									<label for="taskCategoryInput">Category</label>
+									<select id="taskCategoryInput" class="select">
+										<option value="Study">Study</option>
+										<option value="Coding" selected>Coding</option>
+										<option value="Reading">Reading</option>
+										<option value="Writing">Writing</option>
+										<option value="Other">Other</option>
+									</select>
+								</div>
+								<div class="form-field form-field-small">
+									<label for="taskEstimateInput">Estimated Pomodoros</label>
+									<input
+										type="number"
+										id="taskEstimateInput"
+										class="input"
+										min="1"
+										max="20"
+										value="4"
+									/>
+								</div>
+							</div>
+
+							<button type="submit" class="btn btn-primary btn-full">
+								Add Task
+							</button>
+						</form>
+
+						<div class="task-list-wrap">
+							<h3 class="task-list-heading">Task List</h3>
+							<ul id="taskList" class="task-list"></ul>
+							<p id="taskEmptyState" class="empty-state" hidden>
+								<strong>No tasks yet.</strong>
+								Add your first study or coding task to begin focusing.
+							</p>
+						</div>
+					</div>
+
+					<div class="card history-card">
+						<div class="card-heading history-heading-row">
+							<h2>Session History</h2>
+							<button id="clearHistoryBtn" class="btn btn-ghost btn-small">
+								Clear
+							</button>
+						</div>
+
+						<ul id="historyList" class="history-list"></ul>
+						<p id="historyEmptyState" class="empty-state" hidden>
+							<strong>No sessions yet.</strong>
+							Complete your first focus session to see history here.
+						</p>
+					</div>
+				</section>
+			</main>
+
+			<footer class="app-footer">
+				<p>Built with HTML, CSS &amp; JavaScript - FocusFlow</p>
+			</footer>
+		</div>
+
+		<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+		<script defer src="src/js/constants.js"></script>
+		<script defer src="src/js/dom.js"></script>
+		<script defer src="src/js/storage.js"></script>
+		<script defer src="src/js/state.js"></script>
+		<script defer src="src/js/utils.js"></script>
+		<script defer src="src/js/active-task.js"></script>
+		<script defer src="src/js/stats.js"></script>
+		<script defer src="src/js/history.js"></script>
+		<script defer src="src/js/sound.js"></script>
+		<script defer src="src/js/theme.js"></script>
+		<script defer src="src/js/tasks.js"></script>
+		<script defer src="src/js/timer.js"></script>
+		<script defer src="src/js/app.js"></script>
+	</body>
+</html>

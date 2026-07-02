@@ -1,0 +1,71 @@
+@media (max-width: 1024px) {
+	.dashboard-grid,
+	.content-grid {
+		gap: 18px;
+	}
+}
+
+@media (max-width: 860px) {
+	.dashboard-grid,
+	.content-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.app-container {
+		padding-top: 20px;
+	}
+
+	.app-header {
+		flex-direction: column;
+	}
+
+	.header-right {
+		width: 100%;
+	}
+
+	.header-right .btn {
+		flex: 1;
+		justify-content: center;
+	}
+
+	.card {
+		padding: 20px;
+	}
+
+	.timer-controls {
+		justify-content: center;
+	}
+
+	.timer-controls .btn {
+		flex: 1 1 calc(50% - 5px);
+		text-align: center;
+	}
+
+	.form-row {
+		grid-template-columns: 1fr;
+	}
+
+	.stats-grid {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.toast {
+		left: 50%;
+		right: auto;
+		bottom: 16px;
+		transform: translate(-50%, 12px);
+	}
+
+	.toast.show {
+		transform: translate(-50%, 0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		animation-duration: 0.001ms !important;
+		transition-duration: 0.001ms !important;
+	}
+}

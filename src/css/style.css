@@ -2,4 +2,9 @@
 @import url("./base.css");
 @import url("./layout.css");
 @import url("./components.css");
+@import url("./timer.css");
+@import url("./stats.css");
+@import url("./tasks.css");
+@import url("./history.css");
+@import url("./feedback.css");
 @import url("./responsive.css");
