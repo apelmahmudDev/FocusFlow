@@ -9,6 +9,7 @@
 		settingsFocusInput: document.getElementById("settingsFocusInput"),
 		settingsShortInput: document.getElementById("settingsShortInput"),
 		settingsLongInput: document.getElementById("settingsLongInput"),
+		settingsResetBtn: document.getElementById("settingsResetBtn"),
 		settingsSaveBtn: document.getElementById("settingsSaveBtn"),
 
 		modeButtons: Array.from(document.querySelectorAll(".mode-btn")),

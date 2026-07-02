@@ -25,9 +25,7 @@
 	function openSettings() {
 		const { el } = app;
 
-		el.settingsFocusInput.value = secondsToMinutes(app.DURATIONS.focus);
-		el.settingsShortInput.value = secondsToMinutes(app.DURATIONS.short);
-		el.settingsLongInput.value = secondsToMinutes(app.DURATIONS.long);
+		setSettingsInputs(app.DURATIONS);
 
 		syncOpenState(true);
 		el.settingsFocusInput.focus();
@@ -37,13 +35,15 @@
 		syncOpenState(false);
 	}
 
-	function saveSettings() {
+	function setSettingsInputs(durations) {
 		const { el } = app;
-		const nextDurations = {
-			focus: minutesToSeconds(el.settingsFocusInput.value, app.DURATIONS.focus),
-			short: minutesToSeconds(el.settingsShortInput.value, app.DURATIONS.short),
-			long: minutesToSeconds(el.settingsLongInput.value, app.DURATIONS.long),
-		};
+
+		el.settingsFocusInput.value = secondsToMinutes(durations.focus);
+		el.settingsShortInput.value = secondsToMinutes(durations.short);
+		el.settingsLongInput.value = secondsToMinutes(durations.long);
+	}
+
+	function applyDurations(nextDurations, message) {
 		const previousDurations = { ...app.DURATIONS };
 
 		app.DURATIONS = nextDurations;
@@ -64,8 +64,26 @@
 		}
 
 		app.renderTimerDisplay();
-		app.showToast("Timer durations updated.");
+		app.showToast(message);
 		closeSettings();
+	}
+
+	function saveSettings() {
+		const { el } = app;
+		const nextDurations = {
+			focus: minutesToSeconds(el.settingsFocusInput.value, app.DURATIONS.focus),
+			short: minutesToSeconds(el.settingsShortInput.value, app.DURATIONS.short),
+			long: minutesToSeconds(el.settingsLongInput.value, app.DURATIONS.long),
+		};
+
+		applyDurations(nextDurations, "Timer durations updated.");
+	}
+
+	function resetSettings() {
+		const defaultDurations = { ...app.DEFAULT_DURATIONS };
+
+		setSettingsInputs(defaultDurations);
+		applyDurations(defaultDurations, "Timer durations reset to defaults.");
 	}
 
 	app.initSettings = function initSettings() {
@@ -83,6 +101,7 @@
 		});
 
 		el.settingsSaveBtn.addEventListener("click", saveSettings);
+		el.settingsResetBtn.addEventListener("click", resetSettings);
 
 		document.addEventListener("click", (event) => {
 			if (el.settingsPanel.hidden) return;
