@@ -7,7 +7,7 @@
 
 		if (state.mode === "focus") {
 			el.activeTaskLine.textContent = task
-				? `Active task: ${task.title}`
+				? task.title
 				: "No active task selected.";
 		} else {
 			el.activeTaskLine.textContent =
