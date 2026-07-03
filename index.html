@@ -213,7 +213,11 @@
 								</label>
 								<div class="settings-field settings-field-full">
 									<span>Clear daily progress and completed tasks</span>
-									<div class="cleanup-time-grid" role="group" aria-label="Daily cleanup time">
+									<div
+										class="cleanup-time-grid"
+										role="group"
+										aria-label="Daily cleanup time"
+									>
 										<input
 											id="cleanupHourInput"
 											class="input cleanup-time-input"
@@ -244,7 +248,8 @@
 										</select>
 									</div>
 									<span class="settings-hint">
-										Default is end of day. Only completed tasks, session history, and daily progress are cleared.
+										Default is end of day. Only completed tasks, session
+										history, and daily progress are cleared.
 									</span>
 								</div>
 							</div>
@@ -301,7 +306,9 @@
 											stroke-width="2"
 										/>
 									</svg>
-									<span class="visually-hidden">Open timer picture in picture</span>
+									<span class="visually-hidden"
+										>Open timer picture in picture</span
+									>
 								</button>
 								<button
 									id="timerFullscreenBtn"
@@ -342,7 +349,6 @@
 									<span class="visually-hidden">Toggle timer fullscreen</span>
 								</button>
 							</div>
-
 						</div>
 
 						<div class="timer-display-wrap">
@@ -452,13 +458,45 @@
 							<div class="stat-box stat-box-blue">
 								<span class="stat-icon" aria-hidden="true">
 									<svg viewBox="0 0 24 24" fill="none" focusable="false">
-										<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" />
-										<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2" />
+										<circle
+											cx="12"
+											cy="12"
+											r="8"
+											stroke="currentColor"
+											stroke-width="2"
+										/>
+										<circle
+											cx="12"
+											cy="12"
+											r="4"
+											stroke="currentColor"
+											stroke-width="2"
+										/>
 										<circle cx="12" cy="12" r="1.5" fill="currentColor" />
-										<path d="M12 2V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-										<path d="M12 20V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-										<path d="M2 12H4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-										<path d="M20 12H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+										<path
+											d="M12 2V4"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M12 20V22"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M2 12H4"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M20 12H22"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+										/>
 									</svg>
 								</span>
 								<div>
@@ -470,7 +508,9 @@
 							<div class="stat-box stat-box-teal">
 								<span class="stat-icon" aria-hidden="true">
 									<svg viewBox="0 0 24 24" focusable="false">
-										<path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.59l3.2 3.2-1.4 1.42L11 12.41V7h2Z" />
+										<path
+											d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 5v4.59l3.2 3.2-1.4 1.42L11 12.41V7h2Z"
+										/>
 									</svg>
 								</span>
 								<div>
@@ -494,11 +534,15 @@
 							<div class="stat-box stat-box-orange">
 								<span class="stat-icon" aria-hidden="true">
 									<svg viewBox="0 0 24 24" focusable="false">
-										<path d="M7 4h10v2h4v3a5 5 0 0 1-5 5h-.1A6 6 0 0 1 13 16.92V19h3v2H8v-2h3v-2.08A6 6 0 0 1 8.1 14H8a5 5 0 0 1-5-5V6h4V4Zm0 4H5v1a3 3 0 0 0 2.1 2.86A6.7 6.7 0 0 1 7 11V8Zm10 3c0 .29-.03.58-.1.86A3 3 0 0 0 19 9V8h-2v3Z" />
+										<path
+											d="M7 4h10v2h4v3a5 5 0 0 1-5 5h-.1A6 6 0 0 1 13 16.92V19h3v2H8v-2h3v-2.08A6 6 0 0 1 8.1 14H8a5 5 0 0 1-5-5V6h4V4Zm0 4H5v1a3 3 0 0 0 2.1 2.86A6.7 6.7 0 0 1 7 11V8Zm10 3c0 .29-.03.58-.1.86A3 3 0 0 0 19 9V8h-2v3Z"
+										/>
 									</svg>
 								</span>
 								<div>
-									<span class="stat-number stat-number-text" id="statBestCategory"
+									<span
+										class="stat-number stat-number-text"
+										id="statBestCategory"
 										>-</span
 									>
 									<span class="stat-label">Best Category</span>
@@ -522,14 +566,24 @@
 									aria-expanded="false"
 									aria-controls="goalForm"
 								>
-									<span class="goal-edit-icon goal-edit-icon-pen" aria-hidden="true">
+									<span
+										class="goal-edit-icon goal-edit-icon-pen"
+										aria-hidden="true"
+									>
 										<svg viewBox="0 0 24 24" focusable="false">
-											<path d="M4 16.5V20h3.5L18.06 9.44l-3.5-3.5L4 16.5Zm12.76-12.76 3.5 3.5 1.24-1.24a1.24 1.24 0 0 0 0-1.76l-1.74-1.74a1.24 1.24 0 0 0-1.76 0l-1.24 1.24Z" />
+											<path
+												d="M4 16.5V20h3.5L18.06 9.44l-3.5-3.5L4 16.5Zm12.76-12.76 3.5 3.5 1.24-1.24a1.24 1.24 0 0 0 0-1.76l-1.74-1.74a1.24 1.24 0 0 0-1.76 0l-1.24 1.24Z"
+											/>
 										</svg>
 									</span>
-									<span class="goal-edit-icon goal-edit-icon-close" aria-hidden="true">
+									<span
+										class="goal-edit-icon goal-edit-icon-close"
+										aria-hidden="true"
+									>
 										<svg viewBox="0 0 24 24" focusable="false">
-											<path d="m6.4 5 12.6 12.6-1.4 1.4L5 6.4 6.4 5Zm12.6 1.4L6.4 19 5 17.6 17.6 5 19 6.4Z" />
+											<path
+												d="m6.4 5 12.6 12.6-1.4 1.4L5 6.4 6.4 5Zm12.6 1.4L6.4 19 5 17.6 17.6 5 19 6.4Z"
+											/>
 										</svg>
 									</span>
 									<span class="visually-hidden goal-edit-text">Edit goal</span>
@@ -657,7 +711,12 @@
 								</div>
 							</div>
 
-							<p id="taskFormError" class="task-form-error" role="alert" hidden></p>
+							<p
+								id="taskFormError"
+								class="task-form-error"
+								role="alert"
+								hidden
+							></p>
 							<button type="submit" class="btn btn-primary btn-full">
 								Add Task
 							</button>
@@ -718,6 +777,7 @@
 
 		<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+		<!-- js script -->
 		<script defer src="src/js/constants.js"></script>
 		<script defer src="src/js/dom.js"></script>
 		<script defer src="src/js/storage.js"></script>
